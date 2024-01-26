@@ -1,8 +1,8 @@
 #include<bits/stdc++.h>
 using namespace std;
-int a;
+string a;
 int main() {
     cin >> a;
-    scanf("%d", &a);
+    cout << a << '\n';
     return 0;
 }
