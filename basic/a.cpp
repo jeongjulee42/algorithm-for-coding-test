@@ -1,10 +1,13 @@
 #include<bits/stdc++.h>
 using namespace std;
-string a;
-string b;
-int main() {
-    cin >> a >> b;
-    cout << a << '\n';
-    cout << b << '\n';
-    return 0;
+int t;
+string s;
+int main(){
+    cin >> t;
+    string bufferflush;
+    getline(cin, bufferflush);
+    for(int i = 0; i < t; i++){
+        getline(cin, s);
+        cout << s << '\n';
+    }
 }
