@@ -1,14 +1,8 @@
-#include <bits/stdc++.h>
+#include<bits/stdc++.h>
 using namespace std;
-#define PI 3.14159
-#define loop(x,n) for(int x = 0; x < n; x++)
-typedef int i;
+int a;
 int main() {
-    cout << PI << '\n';
-    int sum = 0;
-    loop(i,10){
-        sum += i;
-    }
-    cout << sum << '\n';
+    cin >> a;
+    scanf("%d", &a);
     return 0;
 }
