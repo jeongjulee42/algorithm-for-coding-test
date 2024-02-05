@@ -9,7 +9,7 @@ int main(){
     int * c = a; 
     cout << c << "\n"; 
     cout << &a[0] << "\n"; 
-    cout << *a[0] << "\n"; 
+    cout << *a << "\n"; 
     cout << c + 1 << "\n"; 
     cout << &a[1] << "\n";
 
