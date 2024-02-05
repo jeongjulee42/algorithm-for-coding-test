@@ -1,24 +1,17 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-pair<int, int> pi;
-tuple<int, int, int> tl;
-int a,b,c;
 
 
 
-
-
-
-int main(){
-    pi = {1,2};
-    tl = make_tuple(1,2,3);
-    tie(a, b) = pi;
-    cout << a << " : " << b;
-
-
-
-
+int a[3] = {1, 2, 3}; 
+int main(){ 
+    int * c = a; 
+    cout << c << "\n"; 
+    cout << &a[0] << "\n"; 
+    cout << *a[0] << "\n"; 
+    cout << c + 1 << "\n"; 
+    cout << &a[1] << "\n";
 
 
 
