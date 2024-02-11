@@ -1,23 +1,18 @@
 #include <bits/stdc++.h>
 using namespace std;
-vector<string> split (const string& input, string delimiter){
-    vector<string> result;
-    auto start = 0;
-    auto end = input.find(delimiter);
-    while(end != string::npos){
-        result.push_back(input.substr(start, end - start));
-        start = end + delimiter.size();
-        end = input.find(delimiter, start);
-    }
-    result.push_back(input.substr(start));
-    return result;
-}
+pair<int, int> pi;
+tuple<int, int, int> tl;
+int a,b,c;
 
 
 int main(){ 
-    string s = "안녕하세요 큰돌이는 킹갓제너럴 천재입니다 정말이에요!", d = " ";
-    vector<string> a = split(s, d);
-    for(string b : a) cout << b << '\n';
+    pi = {1, 2};
+    tl = make_tuple(1, 2, 3);
+    tie(a, b) = pi;
+    cout << a << ":" << b << "\n";
+    tie(a, b, c) = tl;
+    cout << a << ":" << b << ":" << c << "\n";
+
 
     return 0;
 }
