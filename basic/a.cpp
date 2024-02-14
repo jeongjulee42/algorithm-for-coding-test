@@ -1,16 +1,42 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+map<string, int> mp;
+string a[] = {"주홍철","이승철","박종선"};
 
 
 int main(){ 
+    for(int i = 0; i < 3; i++){
+        mp.insert({a[i], i+1});
+        mp[a[i]] = i + 1;
+    }
 
-    vector<int> a(4,99);
-    
+    cout << mp["kundol"] << '\n';
+    mp["kundol"] = 4;
+    cout << mp.size() << '\n';
 
 
-    for(auto v : a) cout << v << ' ';
-    cout << '\n';
+    mp.erase("kundol");
+    auto it = mp.find("kundol");
+
+    if(it == mp.end()){
+        cout << "can't find man" << '\n';
+    }
+
+    if(it != mp.end()){
+        cout << (*it).first << " : " << (*it).second <<'\n';
+    }
+
+
+    for(auto it : mp){
+        cout << (it).first << " : " << (it).second << '\n';
+    }
+
+    // for(auto it = mp.begin(); it != mp.end(); it++){
+    //     cout << (*it).first << " : " << (*it).second << '\n';
+    // }
+    // mp.clear();
+
 
     return 0;
 }
