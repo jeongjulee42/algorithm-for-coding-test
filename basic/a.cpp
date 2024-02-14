@@ -3,11 +3,14 @@ using namespace std;
 
 
 
-
 int main(){ 
 
-    vector<int> a {1, 2, 3, 3, 3, 4};
-    cout << lower_bound(a.begin(), a.end(), 3) - a.begin() << '\n';
+    vector<int> a(4,99);
+    
+
+
+    for(auto v : a) cout << v << ' ';
+    cout << '\n';
 
     return 0;
 }
