@@ -1,15 +1,17 @@
 #include <bits/stdc++.h>
 using namespace std;
-queue<int> q;
 
-
+vector<int> v;
 
 int main(){ 
-    for(int i = 1; i <= 10; i++)q.push(i);
-    while(q.size()){
-        cout << q.front() << ' ';
-        q.pop();
+    for(int i = 1; i <= 5; i++){
+        v.push_back(i);
+        v.push_back(i);
     }
-
+    for(int i : v) cout << i << ' ';
+    cout << '\n';
+    auto it = unique(v.begin(), v.end());
+    cout << it - v.begin() << '\n';
+    for(int i : v) cout << i << " ";
     return 0;
 }
