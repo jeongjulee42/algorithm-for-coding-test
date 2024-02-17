@@ -4,14 +4,8 @@ using namespace std;
 vector<int> v;
 
 int main(){ 
-    for(int i = 1; i <= 5; i++){
-        v.push_back(i);
-        v.push_back(i);
-    }
-    for(int i : v) cout << i << ' ';
-    cout << '\n';
-    auto it = unique(v.begin(), v.end());
-    cout << it - v.begin() << '\n';
-    for(int i : v) cout << i << " ";
+    vector<int> v = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10}; 
+    int sum = accumulate(v.begin(), v.end(), 10); 
+    cout << sum << '\n'; // 55
     return 0;
 }
