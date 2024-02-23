@@ -1,32 +1,31 @@
 #include <bits/stdc++.h>
 using namespace std;
 //순열
-int a[3] = {1,2,3};
-int n = 3, r = 2;
+int n = 5, k = 3, a[5] = {1, 2, 3, 4, 5}; 
 
-void print(){
-    for(int i = 0; i < r; i++){
-        cout << a[i] << " ";
-    }
+
+void print(vector<int> b){
+    for(int i : b)cout << i << " ";
     cout << '\n';
 }
 
-void makePermutation(int n, int r, int depth){
-    if(r == depth){
-        print();
+void combi(int start, vector<int> b){
+    if(b.size() == k){
+        print(b);
         return;
     }
-    for(int i = depth; i < n; i++){
-        swap(a[i], a[depth]);
-        makePermutation(n, r, depth + 1);
-        swap(a[i], a[depth]);
+    for(int i = start + 1; i < n; i++){
+        b.push_back(i);
+        combi(i, b);
+        b.pop_back();
     }
     return;
 }
 
 
 int main(){ 
-    makePermutation(n, r, 0);
+    vector<int> b;
+    combi(-1, b);
     
 
 
