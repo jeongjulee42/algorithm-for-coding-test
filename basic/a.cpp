@@ -1,18 +1,34 @@
 #include <bits/stdc++.h>
 using namespace std;
-// 피보나치 합
+//순열
+int a[3] = {1,2,3};
+int n = 3, r = 2;
 
-int num = 0;
+void print(){
+    for(int i = 0; i < r; i++){
+        cout << a[i] << " ";
+    }
+    cout << '\n';
+}
 
-int fibo(int n){
-    if(n == 1 || n == 2) return 1;
-    return fibo(n-1) + fibo(n-2);
+void makePermutation(int n, int r, int depth){
+    if(r == depth){
+        print();
+        return;
+    }
+    for(int i = depth; i < n; i++){
+        swap(a[i], a[depth]);
+        makePermutation(n, r, depth + 1);
+        swap(a[i], a[depth]);
+    }
+    return;
 }
 
 
 int main(){ 
-    cout << "피보나치 합 계산할 수를 입력하세요." << '\n';
-    cin >> num;
-    cout << "정답은 :" << fibo(num);
+    makePermutation(n, r, 0);
+    
+
+
     return 0;
 }
