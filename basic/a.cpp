@@ -1,18 +1,18 @@
 #include <bits/stdc++.h>
 using namespace std;
-// factorial 5 4 3 2 1
+// 피보나치 합
 
 int num = 0;
 
-int factorial(int num){
-    if(num == 1 || num == 0)return 1;
-    return num * factorial(num - 1);
+int fibo(int n){
+    if(n == 1 || n == 2) return 1;
+    return fibo(n-1) + fibo(n-2);
 }
 
 
 int main(){ 
-    cout << "팩토리얼 계산할 수를 입력하세요." << '\n';
+    cout << "피보나치 합 계산할 수를 입력하세요." << '\n';
     cin >> num;
-    cout << "정답은 :" << factorial(num);
+    cout << "정답은 :" << fibo(num);
     return 0;
 }
