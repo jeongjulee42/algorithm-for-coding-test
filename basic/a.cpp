@@ -1,33 +1,18 @@
 #include <bits/stdc++.h>
 using namespace std;
-//순열
-int n = 5, k = 3, a[5] = {1, 2, 3, 4, 5}; 
 
 
-void print(vector<int> b){
-    for(int i : b)cout << i << " ";
-    cout << '\n';
+
+
+int gcd(int a, int b){ 
+    if(a == 0) 
+    return b; return gcd(b % a, a);
 }
-
-void combi(int start, vector<int> b){
-    if(b.size() == k){
-        print(b);
-        return;
-    }
-    for(int i = start + 1; i < n; i++){
-        b.push_back(i);
-        combi(i, b);
-        b.pop_back();
-    }
-    return;
+int lcm(int a, int b){ 
+    return (a * b) / gcd(a, b);
 }
-
-
 int main(){ 
-    vector<int> b;
-    combi(-1, b);
-    
-
-
+    int a = 10, b = 12; 
+    cout << lcm(a, b) << '\n'; 
     return 0;
 }
