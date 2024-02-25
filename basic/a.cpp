@@ -1,18 +1,24 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+const int max_n = 40;
+bool che[max_n + 1];
 
-
-
-int gcd(int a, int b){ 
-    if(a == 0) 
-    return b; return gcd(b % a, a);
+vector<int> era(int mx_n){
+    vector<int> v;
+    for(int i = 2; i <= mx_n; i++){
+        if(che[i]) continue;
+        for(int j = 2*i; j <mx_n; j += i){
+            che[j] = 1;
+        }
+    }
+    for(int i = 2; i <= mx_n; i++) if(che[i] == 0)v.push_back(i);
+    return v;
+    
 }
-int lcm(int a, int b){ 
-    return (a * b) / gcd(a, b);
-}
+
 int main(){ 
-    int a = 10, b = 12; 
-    cout << lcm(a, b) << '\n'; 
+    vector<int> a = era(max_n);
+    for(int i : a)cout << i << " ";
     return 0;
 }
