@@ -1,22 +1,13 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-bool check(int n){
-    if(n <= 1) return 0;
-    if(n == 2) return 1;
-    if(n % 2 == 0) return 0;
-    for(int i = 3; i * i <= n; i++){
-        if(n % i == 0) return 0;
-    }
-    return 1;
-}
+
 
 
 int main(){ 
-    for( int i = 1; i <= 20; i++){
-        if(check(i)){
-            cout << i << "는 소수입니다.\n";
-        }
-    }
+    vector<int> v = {1,2,3,4,5,6};
+    rotate(v.begin(), v.begin() + 2, v.end());
+    for(int a : v) cout << a << ' ';
+    cout << '\n';
     return 0;
 }
