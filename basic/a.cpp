@@ -1,21 +1,22 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-vector<vector<int>> v = {{1, 2, 3}, {4, 5, 6}, {7, 8, 9}};
-int b[3][3];
+vector<int> v;
 
 
 int main(){ 
-    for(int i = 0; i < 3; i++){
-        for(int j = 0; j < 3; j++){
-            b[j][i] = v[i][j];
-        }
+    int n = 100;
+    int b = 2;
+    while(n > 1){
+        v.push_back(n%b);
+        n /= b;
     }
-    for(int i = 0; i < 3; i++){
-        for(int j = 0; j < 3; j++){
-            cout << b[i][j] << " ";
-        }
-        cout << '\n';
+    if(n == 1)v.push_back(1);
+    reverse(v.begin(), v.end());
+    for(int a : v){
+        if(a>= 10)cout << char( a+ 55);
+        else cout << a;
     }
+
     return 0;
 }
