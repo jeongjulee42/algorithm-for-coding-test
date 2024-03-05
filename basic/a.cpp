@@ -1,31 +1,22 @@
-#include <bits/stdc++.h>
+#include<bits/stdc++.h>
 using namespace std;
 
-int n = 5;
-int k = 3;
-int a[5] = {1, 2, 3, 4, 5};
+typedef long long ll;
+int a[100004], b, c, psum[100004], n, m;
 
-void print(vector<int> b){
-    for(int i : b) cout << i << " ";
-    cout << '\n';
-}
+int main(){
+	ios_base::sync_with_stdio(false);
+	cin.tie(NULL);
+	cout.tie(NULL);
 
-void combi(int start, vector<int> b){
-    if(b.size() == k){
-        print(b);
-        return;
-    }
-    for(int i = start + 1; i < n; i++){
-        b.push_back(i);
-        combi(i, b);
-        b.pop_back();
-    }
-    return;
-}
-
-
-int main(){ 
-    vector<int> b;
-    combi(-1, b);
-    return 0;
+	cin >> n >> m;
+	for(int i = 1; i <= n; i++){
+		cin >> a[i];
+		psum[i] = psum[i-1] + a[i];
+	}
+	for(int i = 0; i < m; i++){
+		cin >> b >> c;
+		cout << psum[c] - psum[b - 1] << '\n';
+	}
+	return 0;
 }
