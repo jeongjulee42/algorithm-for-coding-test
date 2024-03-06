@@ -1,23 +1,21 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-int n;
-string f, res;
-int a[26];
+string s;
 
 int main(){
 	
-	cin >> n;
-	for(int i = 0; i < n; i++){
-		cin >> f;
-		a[f[0] - 'a']++;
+	getline(cin, s);
+	for(int i = 0; i < s.size(); i++){
+		if(s[i] >= 65 && s[i] <=90){
+			if(s[i] + 13 > 90) s[i] -= 13;
+			else s[i] += 13;
+		} else if (s[i] >= 97 && s[i] <= 122){
+			if(s[i] + 13 > 122) s[i] -= 13;
+			else s[i] += 13;
+		}
 	}
-	for(int i = 0; i < 26; i++){
-		if(a[i] > 4) res += char(i + 97);
-	}
-	if(res == ""){
-		cout << "PREDAJA" << '\n';
-	}
-	else cout << res << '\n';
+	cout << s << '\n';
+
 	return 0;
 }
