@@ -3,24 +3,21 @@ using namespace std;
 
 int n;
 string f, res;
-map<char, int> mp;
+int a[26];
 
 int main(){
 	
 	cin >> n;
 	for(int i = 0; i < n; i++){
 		cin >> f;
-		if(mp.find(f[0]) == mp.end()) mp.insert({f[0], 1});
-		else mp[f[0]]++;
+		a[f[0] - 'a']++;
 	}
-
-	for(auto it : mp) {
-		if(it.second > 4){
-			res += it.first;
-		}
+	for(int i = 0; i < 26; i++){
+		if(a[i] > 4) res += char(i + 97);
 	}
-	if(res == "") cout << "PREDAJA" << '\n';
+	if(res == ""){
+		cout << "PREDAJA" << '\n';
+	}
 	else cout << res << '\n';
-
 	return 0;
 }
