@@ -1,19 +1,17 @@
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
 using namespace std;
 
-int a[26];
-string s;
+string s, temp;
 
-int main() {
+int main(){
 	ios::sync_with_stdio(0);
 	cin.tie(NULL);
 	cout.tie(NULL);
-	
-	cin >> s;
-	for(int i = 0; i < s.size(); i++){
-		a[int(s[i]) - 97]++;
-	}
-	for(int i = 0; i < 26; i++)cout << a[i] << " ";
 
+	cin >> s;
+	temp = s;
+	reverse(s.begin(), s.end());
+	if(temp == s) cout << 1 << '\n';
+	else cout << 0 << '\n';
 	return 0;
 }
