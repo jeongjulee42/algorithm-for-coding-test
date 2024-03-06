@@ -1,17 +1,26 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-string s, temp;
+int n;
+string f, res;
+map<char, int> mp;
 
 int main(){
-	ios::sync_with_stdio(0);
-	cin.tie(NULL);
-	cout.tie(NULL);
+	
+	cin >> n;
+	for(int i = 0; i < n; i++){
+		cin >> f;
+		if(mp.find(f[0]) == mp.end()) mp.insert({f[0], 1});
+		else mp[f[0]]++;
+	}
 
-	cin >> s;
-	temp = s;
-	reverse(s.begin(), s.end());
-	if(temp == s) cout << 1 << '\n';
-	else cout << 0 << '\n';
+	for(auto it : mp) {
+		if(it.second > 4){
+			res += it.first;
+		}
+	}
+	if(res == "") cout << "PREDAJA" << '\n';
+	else cout << res << '\n';
+
 	return 0;
 }
