@@ -1,27 +1,19 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-int num;
-string file, f_s, f_e, inpt;
+int a[100005], psum[100005], n, k;
+vector<int> res;
 
 int main(){
-    ios::sync_with_stdio(0);
-    cin.tie(NULL);
-    cout.tie(NULL);
-
-    cin >> num;
-    cin >> file;
-    f_s = file.substr(0, file.find('*'));
-    f_e = file.substr(file.find('*') + 1);
-    
-    vector<string> res;
-    for(int i = 0; i < num; i++){
-        cin >> inpt;
-        if(inpt.size() < f_s.size() + f_e.size()) res.push_back("NE");
-        else if(inpt.substr(0, f_s.size()) != f_s) res.push_back("NE");
-        else if (inpt.substr(inpt.size() - f_e.size()) != f_e) res.push_back("NE");
-        else res.push_back("DA");
+    cin >> n >> k;
+    for(int i = 1; i <= n; i++){
+        cin >> a[i];
+        psum[i] = psum[i - 1] + a[i];
     }
-    for(string s : res) cout << s << '\n';
+    for(int i = k - 1; i < n; i++){
+        res.push_back(psum[i + 1] - psum[i - k + 1]);
+    }
+    cout << *max_element(res.begin(), res.end())<< '\n';
+
     return 0;
 }
