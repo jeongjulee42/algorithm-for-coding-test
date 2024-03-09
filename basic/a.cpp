@@ -1,37 +1,26 @@
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
 using namespace std;
 
-string name, res, temp;
-char pos;
-map<char, int> mp;
-int cnt = 0;
+unordered_map<string, int> mp;
+int a, b;
+string c, str;
+vector<string> v;
 
 int main(){
     ios::sync_with_stdio(0); cin.tie(NULL); cout.tie(NULL);
-    cin >> name;
-    for(char s : name){
-        if(mp.find(s) == mp.end()) mp.insert({s, 1});
-        else mp[s]++;
+
+    cin >> a >> b;
+    for(int i = 0; i < a; i++){
+        cin >> str;
+        mp.insert({str, i + 1});
+        v.push_back(str);
     }
-    for(auto m : mp){
-        if(m.second % 2 == 1){
-            cnt ++;
-            if(cnt > 1){
-                cout << "I'm Sorry Hansoo" << '\n';
-                exit(0);
-            }
-            pos = m.first;
-            m.second --; 
-        }
-        for(int i = 0; i < m.second / 2; i++){
-            if(m.second == 0) continue;
-            res += m.first;
+    for(int i = 0; i < b; i++){
+        cin >> c;
+        if(atoi(c.c_str())) cout << v[atoi(c.c_str()) - 1] << '\n'; 
+        else {
+            cout << mp[c] << '\n';
         }
     }
-    temp = res;
-    reverse(res.begin(), res.end());
-    if(cnt == 1) res = temp + pos + res;
-    else res = temp + res;
-    cout << res << '\n';
     return 0;
 }
