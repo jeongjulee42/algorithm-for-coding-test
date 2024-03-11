@@ -1,24 +1,22 @@
 #include <bits/stdc++.h>
 using namespace std;
+typedef long long ll;
 
-int num, num2, res = 1;
-string str, str1;
+ll a, b, c;
+
+ll go(ll a, ll b){
+    if(b == 1) return a % c;
+    ll ret = go(a, b / 2);
+    ret = (ret * ret) % c;
+    if(b % 2) ret = (ret * a) % c;
+    return ret;
+}
 
 int main(){
     ios::sync_with_stdio(0); cin.tie(NULL); cout.tie(NULL);
 
-    cin >> num;
-    for(int i = 0; i < num; i++){
-        map<string, int> mp;
-        res = 1;
-        cin >> num2;
-        for(int j = 0; j < num2; j++){
-            cin >> str1 >> str;
-            mp[str]++ ;
-        }
-        for(auto m : mp) res *= (m.second + 1);
-        res--;
-        cout << res << '\n';
-    }
+    cin >> a >> b >> c;
+    cout << go(a, b) << '\n';
+    
     return 0;
 }
