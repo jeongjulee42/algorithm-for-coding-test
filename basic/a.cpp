@@ -1,26 +1,24 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-unordered_map<string, int> mp;
-int a, b;
-string c, str;
-vector<string> v;
+int num, num2, res = 1;
+string str, str1;
 
 int main(){
     ios::sync_with_stdio(0); cin.tie(NULL); cout.tie(NULL);
 
-    cin >> a >> b;
-    for(int i = 0; i < a; i++){
-        cin >> str;
-        mp.insert({str, i + 1});
-        v.push_back(str);
-    }
-    for(int i = 0; i < b; i++){
-        cin >> c;
-        if(atoi(c.c_str())) cout << v[atoi(c.c_str()) - 1] << '\n'; 
-        else {
-            cout << mp[c] << '\n';
+    cin >> num;
+    for(int i = 0; i < num; i++){
+        map<string, int> mp;
+        res = 1;
+        cin >> num2;
+        for(int j = 0; j < num2; j++){
+            cin >> str1 >> str;
+            mp[str]++ ;
         }
+        for(auto m : mp) res *= (m.second + 1);
+        res--;
+        cout << res << '\n';
     }
     return 0;
 }
