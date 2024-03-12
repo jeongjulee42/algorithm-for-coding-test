@@ -1,23 +1,32 @@
 #include <bits/stdc++.h>
 using namespace std;
-typedef long long ll;
 
-int n;
+const int V = 4;
+vector<int> adj[V];
+
+
 
 int main(){
-    while(scanf("%d", &n) != EOF){
-        int cnt = 1, ret = 1;
-        while(true){
-            if(cnt % n == 0){
-                printf("%d\n", ret);
-                break;
-            }
-            else {
-                cnt = (cnt * 10) + 1;
-                cnt %= n;
-                ret ++ ;
-            }
-        }
+    adj[0].push_back(1);
+    adj[0].push_back(2);
+    adj[0].push_back(3);
+
+    adj[1].push_back(0);
+    adj[1].push_back(2);
+
+    adj[2].push_back(0);
+    adj[2].push_back(1);
+
+    adj[3].push_back(0); 
+
+    for(int i = 0; i < V; i++){
+        cout << i << "::";
+        for(int there : adj[i]) cout << there << ' ';
+        cout << '\n';
     }
+
+
+
+
     return 0;
 }
