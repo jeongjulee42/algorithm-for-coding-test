@@ -1,27 +1,46 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-const int n = 6; 
-vector<int> adj[n];
-int visited[n];
+int nodeList[] = {10, 12, 14, 16, 18, 20, 22, 24};
+vector<int> adj[100];
+int visited[100];
 
-void dfs(int u){
-    visited[u] = 1;
-    cout << u << '\n';
-    for(int v : adj[u]){
-        if(visited[v] == 0) dfs(v);
+void bfs(int here){
+    queue<int> q;
+    visited[here] = 1;
+    q.push(here);
+    while(q.size()){
+        int here = q.front(); q.pop();
+        for(int there : adj[here]){
+            if(visited[there]) continue;
+            visited[there] = visited[here] + 1;
+            q.push(there);
+        }
     }
+
     return;
 }
 
-int main(){
-    adj[1].push_back(2);
-    adj[1].push_back(3); 
-    adj[2].push_back(4);  
-    adj[4].push_back(2);  
-    adj[2].push_back(5);   
-    dfs(1); 
 
+
+
+int main(){
+    adj[10].push_back(12);
+    adj[10].push_back(14);
+    adj[10].push_back(16);
+    
+    adj[12].push_back(18);
+    adj[12].push_back(20);
+
+
+    adj[20].push_back(22);
+    adj[20].push_back(24);
+    bfs(10);
+
+    for(int i : nodeList){
+        cout << i << " : " << visited[i] << '\n';
+    }
+    cout << "10번으로부터 24번까지 최단거리는 : " << visited[24] - 1 << '\n';
 
     return 0;
 }
