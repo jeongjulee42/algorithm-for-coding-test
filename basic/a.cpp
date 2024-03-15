@@ -1,39 +1,47 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-struct Str{
-    int number;
-    int order;
-    int size;
-    Str(int number, int order, int size) : number(number), order(order), size(size){}
-    Str(){number = 0; order = 0; size = 0;}
-    bool operator < (const Str & a) const {
-        if(size == a.size) return order < a.order;
-        return size > a.size;
-    }
-};
-
-int n, c, temp;
-vector<Str> v;
-set<int> s;
+string input;
+string yes = "> is acceptable.";
+string no = "> is not acceptable.";
+vector<char> v = {'a', 'e', 'o', 'i', 'u'};
 
 int main(){
-    cin >> n >> c;
-    for(int i = 0; i < n; i++){
-        cin >> temp;
-        int t = s.size();
-        s.insert(temp);
-        if(t == s.size()){
-            for(int j = 0; j < v.size(); j++){
-                if(v[j].number == temp) v[j].size ++ ;
-            }
-        }else v.push_back({temp, i, 1});
-    }
-    sort(v.begin(), v.end());
-    for(Str b : v){
-        for(int i = 0; i < b.size; i++){
-            cout << b.number << " ";
+    while(1){
+        cin >> input;
+        if(input == "end") break;
+        int flag = 1;
+        for(int i = 0; i < v.size(); i++){
+            if(input.find(v[i]) != string::npos) flag = 0;
         }
+        char c = '0';
+        int aword = 0;
+        int bword = 0;
+        for(int i = 0; i < input[i]; i++){
+            if(find(v.begin(), v.end(), input[i]) == v.end()){
+                bword ++;
+                aword = 0;
+            }else{
+                aword ++;
+                bword = 0;
+            }
+            if(aword == 3 or bword == 3){
+                flag = 1;
+                break;
+            }
+            if(c == input[i]){
+                string str = "";
+                str.append(1,c);
+                str += input[i];
+                if(str != "ee" && str != "oo"){
+                    flag = 1;
+                    break;
+                }
+            }
+            c = input[i];
+        }
+        if(flag) cout << "<" + input + no << '\n';
+        else cout << "<" + input + yes << '\n';
     }
 
     return 0;
