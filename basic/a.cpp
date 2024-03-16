@@ -1,30 +1,23 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-int h, w;
-char c = 'c';
-char dot = '.';
-char ary[100][100];
-int ret[100][100];
+string input;
+vector<char> b = {'(', ')', '[', ']'};
 
 int main(){
-    cin >> h >> w;
-    for(int i = 0; i < h; i++){
-        for(int j = 0; j < w; j++) cin >> ary[i][j];
-    }
-    for(int i = 0; i < h; i++){
-        int flag = 0;
-        for(int j = 0; j < w; j++) {
-            if(!flag) ret[i][j] = -1;
-            if(ary[i][j] == c) {
-                ret[i][j] = 0;
-                flag = 1;
-            } else if(ary[i][j] == dot && flag){
-                ret[i][j] = ret[i][j-1] + 1; 
-            }
-            cout << ret[i][j] << " ";
+    while(1){
+        getline(cin, input);
+        if(input == ".") break;
+
+        stack<char> stk;
+        for(int i = 0; i < input.size(); i++){
+            if(find(b.begin(), b.end(), input[i]) == b.end()) continue;
+            if (stk.size() != 0 && ((stk.top() == '(' && input[i] == ')') || (stk.top() == '[' && input[i] == ']'))){
+                stk.pop();
+            } else stk.push(input[i]);
         }
-        cout << '\n';
+        if(stk.size() != 0) cout << "no" << '\n';
+        else cout << "yes" << '\n';
     }
 
     return 0;
