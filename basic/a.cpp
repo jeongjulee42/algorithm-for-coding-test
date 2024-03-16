@@ -1,24 +1,24 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-string input;
-vector<char> b = {'(', ')', '[', ']'};
+stack<char> stk;
+string s;
+int n;
 
 int main(){
-    while(1){
-        getline(cin, input);
-        if(input == ".") break;
-
-        stack<char> stk;
-        for(int i = 0; i < input.size(); i++){
-            if(find(b.begin(), b.end(), input[i]) == b.end()) continue;
-            if (stk.size() != 0 && ((stk.top() == '(' && input[i] == ')') || (stk.top() == '[' && input[i] == ']'))){
-                stk.pop();
-            } else stk.push(input[i]);
+    cin >> n;
+    for(int i = 0; i < n; i++){
+        cin >> s;
+        for(int j = 0; j < s.size(); j++){
+            if(stk.size() == 1 && stk.top() == ')') break;
+            else if(stk.size() != 0 && stk.top() != s[j]) stk.pop();
+            else stk.push(s[j]);
         }
-        if(stk.size() != 0) cout << "no" << '\n';
-        else cout << "yes" << '\n';
+        if(stk.size()) cout << "NO" << '\n';
+        else cout << "YES" << '\n';
+        while(stk.size()) {
+            stk.pop();
+        }
     }
-
     return 0;
 }
