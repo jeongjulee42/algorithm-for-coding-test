@@ -1,47 +1,30 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-string input;
-string yes = "> is acceptable.";
-string no = "> is not acceptable.";
-vector<char> v = {'a', 'e', 'o', 'i', 'u'};
+int h, w;
+char c = 'c';
+char dot = '.';
+char ary[100][100];
+int ret[100][100];
 
 int main(){
-    while(1){
-        cin >> input;
-        if(input == "end") break;
-        int flag = 1;
-        for(int i = 0; i < v.size(); i++){
-            if(input.find(v[i]) != string::npos) flag = 0;
-        }
-        char c = '0';
-        int aword = 0;
-        int bword = 0;
-        for(int i = 0; i < input[i]; i++){
-            if(find(v.begin(), v.end(), input[i]) == v.end()){
-                bword ++;
-                aword = 0;
-            }else{
-                aword ++;
-                bword = 0;
-            }
-            if(aword == 3 or bword == 3){
+    cin >> h >> w;
+    for(int i = 0; i < h; i++){
+        for(int j = 0; j < w; j++) cin >> ary[i][j];
+    }
+    for(int i = 0; i < h; i++){
+        int flag = 0;
+        for(int j = 0; j < w; j++) {
+            if(!flag) ret[i][j] = -1;
+            if(ary[i][j] == c) {
+                ret[i][j] = 0;
                 flag = 1;
-                break;
+            } else if(ary[i][j] == dot && flag){
+                ret[i][j] = ret[i][j-1] + 1; 
             }
-            if(c == input[i]){
-                string str = "";
-                str.append(1,c);
-                str += input[i];
-                if(str != "ee" && str != "oo"){
-                    flag = 1;
-                    break;
-                }
-            }
-            c = input[i];
+            cout << ret[i][j] << " ";
         }
-        if(flag) cout << "<" + input + no << '\n';
-        else cout << "<" + input + yes << '\n';
+        cout << '\n';
     }
 
     return 0;
