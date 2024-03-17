@@ -1,24 +1,24 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-stack<char> stk;
-string s;
-int n;
+int score;
+int mnt, sec, tot;
+int n, team;
+int retOne, retTwo;
 
 int main(){
-    cin >> n;
+    scanf("%d", &n);
     for(int i = 0; i < n; i++){
-        cin >> s;
-        for(int j = 0; j < s.size(); j++){
-            if(stk.size() == 1 && stk.top() == ')') break;
-            else if(stk.size() != 0 && stk.top() != s[j]) stk.pop();
-            else stk.push(s[j]);
-        }
-        if(stk.size()) cout << "NO" << '\n';
-        else cout << "YES" << '\n';
-        while(stk.size()) {
-            stk.pop();
-        }
+        scanf("%d %d:%d", &team, &mnt, &sec);
+        sec = mnt * 60 + sec;
+        if(score > 0) retOne += sec - tot;
+        else if(score < 0) retTwo += sec - tot;
+        tot = sec;
+        if(team == 1) score++;
+        else score--;
     }
+    if(score > 0) retOne += 48*60 - tot;
+    else if(score < 0) retTwo += 48*60 - tot;
+    printf("%02d:%02d\n%02d:%02d\n", retOne/60, retOne%60, retTwo/60, retTwo%60);
     return 0;
 }
