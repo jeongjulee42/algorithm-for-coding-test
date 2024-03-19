@@ -1,42 +1,46 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-vector<int> v[50];
-bool visited[50];
-int n, num, root, res, del;
+int n, m, a, b, cnt;
+vector<int> v[10001];
+int visited[10001];
+int ret[10001];
 
 void go(int from){
     visited[from] = 1;
-    if(from == del) return;
-    if(v[from].size() == 0){
-        res++;
-        return;
+    cout << "from : " << from << '\n';
+    cnt++;
+    for(auto there : v[from]){
+        if(visited[there]) continue;
+        go(there);
     }
-    for(int a : v[from]){
-        if(visited[a]) continue;
-        if(a == del && v[from].size() == 1){
-            res++;
-            continue;
-        }
-        go(a);
-    }
-    return;
 }
 
 int main(){
     ios::sync_with_stdio(0); cin.tie(NULL); cout.tie(NULL);
 
-    cin >> n;
-    for(int i = 0; i < n; i++){
-        cin >> num;
-        if(num == -1){
-            root = i;
-        }else{
-            v[num].push_back(i);
+    cin >> n >> m;
+    for(int i = 0; i < m; i++){
+        cin >> a >> b;
+        v[b].push_back(a);
+    }
+    for(int i = 1; i <= n; i++){
+        if(v[i].size()) {
+            cnt = 0;
+            go(i);
+            cout << "-----" << '\n';
+            ret[i] = cnt;
+            memset(visited, 0, sizeof(visited));
         }
     }
-    cin >> del;
-    go(root);
-    cout << res << '\n';
+    int maxval = 0;
+    for(int i = 1; i <= n; i++){
+        maxval = max(maxval, ret[i]);
+    }
+    for(int i = 1; i <= n; i++){
+        if(maxval == ret[i]) cout << i << " ";
+    }
+    cout << '\n';
+
     return 0;
 }
