@@ -1,56 +1,44 @@
-#include <bits/stdc++.h>
+#include<bits/stdc++.h>
 using namespace std;
 
-int n, r, l, ny, nx, ret, flag, sum;
-int ary[50][50];
-int visited[50][50];
+int r, c, k;
 int dy[] = {-1, 0, 1, 0};
 int dx[] = {0, 1, 0, -1};
-vector<pair<int, int>> temp;
+char ary[5][5];
+int visited[5][5];
+vector<int> ret;
 
-void dfs(int y, int x){
-    temp.push_back({y, x});
-    sum += ary[y][x];
-    visited[y][x] = 1;
+void go(int y, int x){
     for(int i = 0; i < 4; i++){
-        ny = y + dy[i];
-        nx = x + dx[i];
-        if(ny >= n || nx >= n || ny < 0 || nx < 0) continue;
+        int ny = y + dy[i];
+        int nx = x + dx[i];
+        if(ny >= r || nx >= c || ny < 0 || nx < 0) continue;
         if(visited[ny][nx]) continue;
-        if(abs(ary[y][x] - ary[ny][nx]) < r || abs(ary[y][x] - ary[ny][nx]) > l) continue;
-        dfs(ny, nx);
+        if(ary[ny][nx] == 'T') continue;
+        if(ny == 0 && nx == c - 1){
+            ret.push_back(visited[y][x] + 1);
+        }
+        visited[ny][nx] = visited[y][x] + 1;
+        go(ny, nx);
+        visited[ny][nx] = 0;
     }
+    return;
 }
 
 int main(){
-    ios::sync_with_stdio(0); cin.tie(NULL); cout.tie(NULL);
 
-    cin >> n >> r >> l;
-    for(int i = 0; i < n; i++){
-        for(int j = 0; j < n; j++){
+    cin >> r >> c >> k;
+    for(int i = 0; i < r; i++){
+        for(int j = 0; j < c; j++){
             cin >> ary[i][j];
         }
     }
-    ret = 0;
-    while(true){
-        memset(visited, 0, sizeof(visited));
-        flag = 0;
-        for(int i = 0; i < n; i++){
-            for(int j = 0; j < n; j++){
-                if(visited[i][j] == 1) continue;
-                sum = 0;
-                temp.clear();
-                dfs(i, j);
-                int val = sum / temp.size();
-                for(auto t : temp){
-                    ary[t.first][t.second] = val;
-                }
-                flag++;
-            }
-        }
-        if(flag == n*n) break;
-        ret ++;
+    visited[r - 1][0] = 1;
+    go(r - 1, 0);
+    int cnt = 0;
+    for(int v : ret){
+        if(k == v) cnt++;
     }
-    cout << ret << '\n';
+    cout << cnt << '\n';
     return 0;
 }
