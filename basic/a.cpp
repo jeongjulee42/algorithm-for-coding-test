@@ -1,47 +1,72 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-int n;
-int ary[10][10];
-int cost[10][10];
-vector<pair<int,int>> cordi;
+char ary[1000][1000];
+int visited[1000][1000];
+int r, c, sy, sx, y, x;
+int dy[] = {-1, 0, 1, 0};
+int dx[] = {0, 1, 0, -1};
+vector<pair<int, int>> fire;
 vector<int> ret;
 
-
 int main(){
-    cin >> n;
-    for(int i = 0; i < n; i++){
-        for(int j = 0; j < n; j++){
+    cin >> r >> c;
+    for(int i = 0; i < r; i++){
+        for(int j = 0; j < c; j++){
             cin >> ary[i][j];
-        }
-    }
-    for(int i = 1; i < n - 1; i++){
-        for(int j = 1; j < n - 1; j++){
-            cost[i][j] = ary[i][j] + ary[i-1][j] + ary[i+1][j] + ary[i][j+1] + ary[i][j-1]; 
-            cordi.push_back({i, j});
-        }
-    }
-    for(int i = 0; i < cordi.size(); i++){
-        for(int j = i + 1; j < cordi.size(); j++){
-            if(cordi[i].first == cordi[j].first && abs(cordi[i].second - cordi[j].second) < 3) continue;
-            if(cordi[i].second == cordi[j].second && abs(cordi[i].first - cordi[j].first) < 3) continue;
-            if(abs(cordi[i].first - cordi[j].first) < 2 && abs(cordi[i].second - cordi[j].second) < 2) continue;
-            for(int k = j + 1; k < cordi.size(); k++){
-                if(cordi[k].first == cordi[j].first && abs(cordi[k].second - cordi[j].second) < 3) continue;
-                if(cordi[k].second == cordi[j].second && abs(cordi[k].first - cordi[j].first) < 3) continue;
-                if(abs(cordi[k].first - cordi[j].first) < 2 && abs(cordi[k].second - cordi[j].second) < 2) continue;
-                if(cordi[k].first == cordi[i].first && abs(cordi[k].second - cordi[i].second) < 3) continue;
-                if(cordi[k].second == cordi[i].second && abs(cordi[k].first - cordi[i].first) < 3) continue;
-                if(abs(cordi[k].first - cordi[i].first) < 2 && abs(cordi[k].second - cordi[i].second) < 2) continue;
-                int pay = cost[cordi[i].first][cordi[i].second] + cost[cordi[j].first][cordi[j].second] + cost[cordi[k].first][cordi[k].second];
-                ret.push_back(pay);    
+            if(ary[i][j] == 'F') fire.push_back({i, j});
+            else if(ary[i][j] == 'J'){
+                sy = i;
+                sx = j;
             }
         }
     }
-    int minVal = 9999999;
-    for(int v : ret){
-        minVal = min(v, minVal);
+    visited[sy][sx] = 1;
+    queue<pair<int, int>> q;
+    q.push({sy, sx});
+    int fireCnt = 0;
+    while(q.size()){
+        tie(y, x) = q.front(); q.pop();
+        if(fireCnt != visited[y][x]){
+            fireCnt = visited[y][x];
+            vector<pair<int, int>> temp;
+            for(int i = 0; i < fire.size(); i++){
+                for(int j = 0; j < 4; j++){
+                    int fy = fire[i].first + dy[j];
+                    int fx = fire[i].second + dx[j];
+                    if(fy < 0 || fx < 0 || fy >= r || fx >= c) continue;
+                    if(ary[fy][fx] == '#' || ary[fy][fx] == 'F') continue;
+                    ary[fy][fx] = 'F';
+                    temp.push_back({fy, fx});
+                }
+            }
+            fire.clear();
+            for(int i = 0; i < temp.size(); i++){
+                fire.push_back(temp[i]);
+            }
+        }
+
+        for(int i = 0; i < 4; i++){
+            int ny = y + dy[i];
+            int nx = x + dx[i];
+            if(ny < 0 || nx < 0 || ny >= r || nx >= c){
+                ret.push_back(visited[y][x]);
+                continue;
+            }
+            if(visited[ny][nx]) continue;
+            if(ary[ny][nx] == 'F' || ary[ny][nx] == '#') continue;
+            visited[ny][nx] = visited[y][x] + 1;
+            q.push({ny, nx});
+        }
     }
-    cout << minVal << '\n';
+    
+    int minVal = 1000004;
+    if(!ret.size()) cout << "IMPOSSIBLE" << '\n';
+    else{
+        for(int v : ret){
+            minVal = min(v, minVal);
+        }
+        cout << minVal << '\n';
+    }
     return 0;
 }
