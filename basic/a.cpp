@@ -1,43 +1,51 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-int k;
-char ary[9];
-int number[10] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
-vector<string> ret;
+char ary[20][20];
+int visited[20][20];
+int r, c, maxVal = 1;
+int dy[] = {-1, 0, 1, 0};
+int dx[] = {0, 1, 0, -1};
+int alpha[26];
+vector<int> ret;
+
+void go(int y, int x){
+    for(int i = 0; i < 4; i++){
+        int ny = y + dy[i];
+        int nx = x + dx[i];
+        if(ny >= r || nx >= c || ny < 0 || nx < 0) continue;
+        if(visited[ny][nx]) continue;
+        if(alpha[ary[ny][nx] - 65] == 1) continue;
+        alpha[ary[ny][nx] - 65] = 1;
+        visited[ny][nx] = visited[y][x] + 1;
+        go(ny, nx);
+        int temp = visited[ny][nx];
+        maxVal = max(maxVal, temp);
+        visited[ny][nx] = 0;
+        alpha[ary[ny][nx] - 65] = 0;
+    }
+}
 
 int main(){
 
-    cin >> k;
-    for(int i = 0; i < k; i++){
-        cin >> ary[i];
+    cin >> r >> c;
+    for(int i = 0; i < r; i++){
+        string str = "";
+        cin >> str;
+        for(int j = 0; j < str.size(); j++){
+            ary[i][j] = str[j];
+        }
     }
-
-    do{
-        int flag = 0;
-        for(int i = 0; i < k; i++){
-            if(ary[i] == '<'){
-                if(!(number[i] < number[i+1])) {
-                    flag = 1;
-                    break;
-                }
-            }else{
-                if(!(number[i] > number[i+1])) {
-                    flag = 1;
-                    break;
-                }
-            }
+    for(int i = 0; i < r; i++){
+        for(int j = 0; j < c; j++){
+            cout << ary[i][j];
         }
-        if(!flag){
-            string str = "";
-            for(int i = 0; i < k+1; i++){
-                str += to_string(number[i]);
-            }
-            ret.push_back(str);
-        }
-    }while(next_permutation(number, number + 10));
-    
-    cout << ret[ret.size() - 1] << '\n' << ret[0] << '\n';
+        cout << '\n';
+    }
+    alpha[ary[0][0] - 65] = 1;
+    visited[0][0] = 1;
+    go(0, 0);
+    cout << maxVal << '\n';
 
     return 0;
 }
