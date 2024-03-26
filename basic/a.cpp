@@ -2,27 +2,42 @@
 using namespace std;
 
 int k;
-vector<int> ret[10];
-int ary[1024];
+char ary[9];
+int number[10] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+vector<string> ret;
 
 int main(){
 
     cin >> k;
-    for(int i = 0; i < int(pow(2, k) - 1); i++){
+    for(int i = 0; i < k; i++){
         cin >> ary[i];
     }
-    for(int i = 0; i < k; i++){
-        for(int j = int(pow(2, i)) - 1; j < int(pow(2, k) - 1); j += int(pow(2, i + 1))){
-            ret[i].push_back(ary[j]);
-        }
-    }
 
-    for(int i = k - 1; i >= 0; i--){
-        for(int j = 0; j < ret[i].size(); j++){
-            cout << ret[i][j] << " ";
+    do{
+        int flag = 0;
+        for(int i = 0; i < k; i++){
+            if(ary[i] == '<'){
+                if(!(number[i] < number[i+1])) {
+                    flag = 1;
+                    break;
+                }
+            }else{
+                if(!(number[i] > number[i+1])) {
+                    flag = 1;
+                    break;
+                }
+            }
         }
-        cout << '\n';
-    }
+        if(!flag){
+            string str = "";
+            for(int i = 0; i < k+1; i++){
+                str += to_string(number[i]);
+            }
+            ret.push_back(str);
+        }
+    }while(next_permutation(number, number + 10));
+    
+    cout << ret[ret.size() - 1] << '\n' << ret[0] << '\n';
 
     return 0;
 }
