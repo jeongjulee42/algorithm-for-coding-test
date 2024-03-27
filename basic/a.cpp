@@ -1,73 +1,62 @@
 #include<bits/stdc++.h>
 using namespace std;
 
+int n, m, sy, sx, ey, ex, flag, y, x;
+char ary[300][300];
 int dy[] = {-1, 0, 1, 0};
 int dx[] = {0, 1, 0, -1};
-char ary[1500][1500];
-int visited[1500][1500];
-int r, c, sy, sx, ey, ex, y, x, flag;
-vector<pair<int, int>> rmv;
+vector<pair<int, int>> temp;
+vector<pair<int, int>> zero;
 queue<pair<int, int>> q;
 
-void bfs(){
+void go(){
     while(q.size()){
         tie(y, x) = q.front(); q.pop();
         for(int i = 0; i < 4; i++){
             int ny = y + dy[i];
             int nx = x + dx[i];
-            if(ny >= r || nx >= c || ny < 0 || nx < 0) continue;
-            if(visited[ny][nx]) {
-                if(visited[y][x] - visited[ny][nx] < 2500000) continue;
-            }
-            if(ary[ny][nx] == 'X'){
-                rmv.push_back({ny, nx});
-                visited[ny][nx] = visited[y][x] + 1;
+            if(ny >= n || nx >= m || ny < 0 || nx < 0) continue;
+            if(ary[ny][nx] == '*') continue;
+            if(ary[ny][nx] == '1') {
+                zero.push_back({ny, nx});
+                temp.push_back({y, x});
                 continue;
             }
-            visited[ny][nx] = visited[y][x] + 1;
+            if(ny == ey && nx == ex){
+                flag = 1;
+                return;
+            }
+            ary[ny][nx] = '*';
+            temp.push_back({ny, nx});
             q.push({ny, nx});
         }
     }
+    return;
 }
 
 int main(){
     ios::sync_with_stdio(0); cin.tie(NULL); cout.tie(NULL);
 
-    cin >> r >> c;
-    int inputFlag = 0;
-    for(int i = 0; i < r; i++){
-        for(int j = 0; j < c; j++){
+    cin >> n >> m;
+    cin >> sy >> sx >> ey >> ex;
+    sy -= 1; sx -= 1; ey -= 1; ex -= 1;
+    for(int i = 0; i < n; i++){
+        for(int j = 0; j < m; j++){
             cin >> ary[i][j];
-            if(ary[i][j] == 'L' && inputFlag == 0){
-                sy = i; sx = j;
-                inputFlag = 1;
-            }else if(ary[i][j] == 'L'){
-                ey = i; ex = j;
-            }
         }
     }
-    visited[sy][sx] = 5000000;
+    int cnt = 0;
     q.push({sy, sx});
-    bfs();
-    for(int i = 0; i < r; i++){
-        for(int j = 0; j < c; j++){
-            if(visited[i][j]) continue;
-            if(ary[i][j] == 'L' || ary[i][j] == '.'){
-                visited[i][j] = 1;
-                q.push({i, j});
-                bfs();
-            }
-        }
-    }
-    int cnt = 1;
     while(!flag){
-        for(int i = 0; i < rmv.size(); i++){
-            ary[rmv[i].first][rmv[i].second] = '.';
-            q.push({rmv[i].first, rmv[i].second});
+        go();
+        for(int i = 0; i < zero.size(); i++){
+            ary[zero[i].first][zero[i].second] = '0';
         }
-        rmv.clear();
-        bfs();
-        if(visited[ey][ex] > 5000000) break;
+        zero.clear();
+        for(int i = 0; i < temp.size(); i++){
+            q.push({temp[i].first, temp[i].second});
+        }
+        temp.clear();
         cnt++;
     }
     cout << cnt << '\n';
