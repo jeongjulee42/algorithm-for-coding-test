@@ -1,51 +1,75 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-char ary[20][20];
-int visited[20][20];
-int r, c, maxVal = 1;
 int dy[] = {-1, 0, 1, 0};
 int dx[] = {0, 1, 0, -1};
-int alpha[26];
-vector<int> ret;
+char ary[1500][1500];
+int visited[1500][1500];
+int r, c, sy, sx, ey, ex, y, x, flag;
+vector<pair<int, int>> rmv;
+queue<pair<int, int>> q;
 
-void go(int y, int x){
-    for(int i = 0; i < 4; i++){
-        int ny = y + dy[i];
-        int nx = x + dx[i];
-        if(ny >= r || nx >= c || ny < 0 || nx < 0) continue;
-        if(visited[ny][nx]) continue;
-        if(alpha[ary[ny][nx] - 65] == 1) continue;
-        alpha[ary[ny][nx] - 65] = 1;
-        visited[ny][nx] = visited[y][x] + 1;
-        go(ny, nx);
-        int temp = visited[ny][nx];
-        maxVal = max(maxVal, temp);
-        visited[ny][nx] = 0;
-        alpha[ary[ny][nx] - 65] = 0;
+void bfs(){
+    while(q.size()){
+        tie(y, x) = q.front(); q.pop();
+        for(int i = 0; i < 4; i++){
+            int ny = y + dy[i];
+            int nx = x + dx[i];
+            if(ny >= r || nx >= c || ny < 0 || nx < 0) continue;
+            if(visited[ny][nx]) {
+                if(visited[y][x] - visited[ny][nx] < 2500000) continue;
+            }
+            if(ary[ny][nx] == 'X'){
+                rmv.push_back({ny, nx});
+                visited[ny][nx] = visited[y][x] + 1;
+                continue;
+            }
+            visited[ny][nx] = visited[y][x] + 1;
+            q.push({ny, nx});
+        }
     }
 }
 
 int main(){
+    ios::sync_with_stdio(0); cin.tie(NULL); cout.tie(NULL);
 
     cin >> r >> c;
-    for(int i = 0; i < r; i++){
-        string str = "";
-        cin >> str;
-        for(int j = 0; j < str.size(); j++){
-            ary[i][j] = str[j];
-        }
-    }
+    int inputFlag = 0;
     for(int i = 0; i < r; i++){
         for(int j = 0; j < c; j++){
-            cout << ary[i][j];
+            cin >> ary[i][j];
+            if(ary[i][j] == 'L' && inputFlag == 0){
+                sy = i; sx = j;
+                inputFlag = 1;
+            }else if(ary[i][j] == 'L'){
+                ey = i; ex = j;
+            }
         }
-        cout << '\n';
     }
-    alpha[ary[0][0] - 65] = 1;
-    visited[0][0] = 1;
-    go(0, 0);
-    cout << maxVal << '\n';
-
+    visited[sy][sx] = 5000000;
+    q.push({sy, sx});
+    bfs();
+    for(int i = 0; i < r; i++){
+        for(int j = 0; j < c; j++){
+            if(visited[i][j]) continue;
+            if(ary[i][j] == 'L' || ary[i][j] == '.'){
+                visited[i][j] = 1;
+                q.push({i, j});
+                bfs();
+            }
+        }
+    }
+    int cnt = 1;
+    while(!flag){
+        for(int i = 0; i < rmv.size(); i++){
+            ary[rmv[i].first][rmv[i].second] = '.';
+            q.push({rmv[i].first, rmv[i].second});
+        }
+        rmv.clear();
+        bfs();
+        if(visited[ey][ex] > 5000000) break;
+        cnt++;
+    }
+    cout << cnt << '\n';
     return 0;
 }
