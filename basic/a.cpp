@@ -1,49 +1,47 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-struct ABC {int a; int b; int c;};
-ABC endNum = {0, 0, 0};
-int ary[3], dp[64][64][64], visited[64][64][64];
-int n;
-int num[6][3] = {
-    {9, 3, 1},
-    {9, 1, 3},
-    {3, 9, 1},
-    {3, 1, 9},
-    {1, 9, 3},
-    {1, 3, 9}
-};
+int n, k;
+int visited[100001];
+int minVal = 987654321;
+int cnt = 1;
 
-int solve(int a, int b, int c){
-    queue<ABC> q;
-    visited[a][b][c] = 1;
-    q.push({a, b, c});
+void go(int here){
+    queue<int> q;
+    visited[here] = 1;
+    q.push(here);
     while(q.size()){
-        int a = q.front().a;
-        int b = q.front().b;
-        int c = q.front().c;
-        q.pop();
-        if(visited[0][0][0]) break;
-        for(int i = 0; i < 6; i++){
-            int na = max(0, a - num[i][0]);
-            int nb = max(0, b - num[i][1]);
-            int nc = max(0, c - num[i][2]);
-            if(visited[na][nb][nc]) continue;
-            visited[na][nb][nc] = visited[a][b][c] + 1;
-            q.push({na, nb, nc});
+        int there = q.front(); q.pop();
+        int temp[3] = {there - 1, there + 1, there * 2};
+        for(int i = 0; i < 3; i++){
+            int nx = temp[i];
+            if(nx <= 0 || nx >= 100001) continue;
+            if(visited[nx] && visited[nx] < visited[there] + 1) continue;
+            if(nx == k){
+                if(minVal < visited[there]) continue;
+                else if(minVal == visited[there]) cnt++;
+                else{
+                    minVal = min(minVal, visited[there]);
+                    cnt = 1;
+                }
+            }
+            visited[nx] = visited[there] + 1;
+            q.push(nx);
         }
     }
-    return visited[0][0][0] - 1;
+    return;
 }
 
 int main(){
-    ios::sync_with_stdio(0); cin.tie(NULL); cout.tie(NULL);
+    ios_base::sync_with_stdio(0); cin.tie(NULL); cout.tie(NULL);
 
-    cin >> n;
-    for(int i = 0; i < n; i++){
-        cin >> ary[i];
+    cin >> n >> k;
+    if(n > k) cout << n - k << '\n' << 1 << '\n';
+    else if(n == k) cout << 0 << '\n' << 1 <<'\n';
+    else{
+        go(n);
+        cout << minVal << '\n' << cnt << '\n';
     }
-    cout << solve(ary[0], ary[1], ary[2]) << '\n';
 
     return 0;
 }
