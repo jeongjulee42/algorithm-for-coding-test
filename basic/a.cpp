@@ -1,49 +1,39 @@
 #include<bits/stdc++.h>
 using namespace std;
 
+struct ABC {int a; int b; int c;};
+ABC endNum = {0, 0, 0};
+int ary[3], dp[64][64][64], visited[64][64][64];
 int n;
-int maxVal = INT_MIN;
-vector<char> cal;
-vector<int> num;
+int num[6][3] = {
+    {9, 3, 1},
+    {9, 1, 3},
+    {3, 9, 1},
+    {3, 1, 9},
+    {1, 9, 3},
+    {1, 3, 9}
+};
 
-int calculate(int a, int b, char c){
-    if(c == '+') return a + b;
-    else if(c == '-') return a - b;
-    else return a * b;
-}
-
-void combi(int start, vector<int> b, int k){
-    if(b.size() == k){
-        int ret = 0;
-        vector<char> calTemp;
-        for(int i = 0; i < cal.size(); i++){
-            calTemp.push_back(cal[i]);
+int solve(int a, int b, int c){
+    queue<ABC> q;
+    visited[a][b][c] = 1;
+    q.push({a, b, c});
+    while(q.size()){
+        int a = q.front().a;
+        int b = q.front().b;
+        int c = q.front().c;
+        q.pop();
+        if(visited[0][0][0]) break;
+        for(int i = 0; i < 6; i++){
+            int na = max(0, a - num[i][0]);
+            int nb = max(0, b - num[i][1]);
+            int nc = max(0, c - num[i][2]);
+            if(visited[na][nb][nc]) continue;
+            visited[na][nb][nc] = visited[a][b][c] + 1;
+            q.push({na, nb, nc});
         }
-        vector<int> numTemp;
-        for(int i = 0; i < num.size(); i++){
-            numTemp.push_back(num[i]);
-        }
-        for(int i = 0; i < b.size(); i++){
-            char cl = calTemp[b[i]];
-            int a1 = numTemp[b[i]];
-            int a2 = numTemp[b[i] + 1];
-            int a3 = calculate(a1, a2, cl);
-            calTemp[b[i]] = '+';
-            numTemp[b[i]] = a3;
-            numTemp[b[i] + 1] = 0;
-        }
-        ret = numTemp[0];
-        for(int i = 0; i < calTemp.size(); i++){
-            ret = calculate(ret, numTemp[i + 1], calTemp[i]);
-        }
-        maxVal = max(maxVal, ret);
     }
-    for(int i = start + 1; i < cal.size(); i ++){
-        if(b.size() && b.back() + 1 == i) continue;
-        b.push_back(i);
-        combi(i, b, k);
-        b.pop_back();
-    }
+    return visited[0][0][0] - 1;
 }
 
 int main(){
@@ -51,21 +41,9 @@ int main(){
 
     cin >> n;
     for(int i = 0; i < n; i++){
-        if(i % 2 == 0){
-            int temp = 0;
-            cin >> temp;
-            num.push_back(temp);
-        }else{
-            char temp = '0';
-            cin >> temp;
-            cal.push_back(temp);
-        }
+        cin >> ary[i];
     }
+    cout << solve(ary[0], ary[1], ary[2]) << '\n';
 
-    for(int i = 0; i < int(ceil(double(n) / 2)); i++){
-        vector<int> b;
-        combi(-1, b, i);
-    }
-    cout << maxVal << '\n';
     return 0;
 }
