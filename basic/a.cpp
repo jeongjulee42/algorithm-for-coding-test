@@ -8,11 +8,10 @@ int main() {
 	ios_base::sync_with_stdio(false); cin.tie(NULL); cout.tie(NULL);
 
 	cin >> a;
-	if(a >= 90) cout << 'A' << '\n';
-	else if(a >= 80) cout << 'B' << '\n';
-	else if(a >= 70) cout << 'C' << '\n';
-	else if(a >= 60) cout << 'D' << '\n';
-	else cout << 'F' << '\n';
+	if(a % 400 == 0) cout << 1 << '\n';
+	else if (a % 100 == 0) cout << 0 << '\n';
+	else if (a % 4 == 0) cout << 1 << '\n';
+	else cout << 0 << '\n';
 
 	return 0;
 }
