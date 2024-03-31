@@ -9,7 +9,7 @@ int main() {
 	cin >> n;
 	for(int i = 1; i <= n; i++){
 		cin >> a >> b;
-		cout << "Case #" << i << ": " << a + b << '\n';
+		cout << a + b << '\n';
 	}
 
 	return 0;
