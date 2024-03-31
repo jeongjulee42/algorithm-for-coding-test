@@ -1,16 +1,17 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-int a, b;
+int a;
 
 
 int main() {
 	ios_base::sync_with_stdio(false); cin.tie(NULL); cout.tie(NULL);
 
-	while(1){
-		cin >> a >> b;
-		if(a == 0 && b == 0) break;
-		cout << a + b <<'\n';
+	cin >> a;
+	for(int i = 1; i <= a; i++){
+		for(int j = 0; j < a - i; j++) cout << " ";
+		for(int j = 0; j < i; j++) cout << "*";
+		cout << '\n';
 	}
 
 	return 0;
