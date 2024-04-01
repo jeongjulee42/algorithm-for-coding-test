@@ -1,20 +1,21 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-int ary[10000];
+int minVal = 987654321;
+int maxVal = -987654321;
 int n, m;
 
 int main() {
 	ios_base::sync_with_stdio(false); cin.tie(NULL); cout.tie(NULL);
 	
-	cin >> n >> m;
+	cin >> n;
 	for(int i = 0; i < n; i++){
-		cin >> ary[i];
+		int a = 0;
+		cin >> a;
+		minVal = min(minVal, a);
+		maxVal = max(maxVal, a);
 	}
-	for(int i = 0; i < n; i++){
-		if(ary[i] < m) cout << ary[i] << " ";
-	}
-	cout << '\n';
+	cout << minVal << " " << maxVal << '\n';
 
 	return 0;
 }
