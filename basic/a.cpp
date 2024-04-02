@@ -1,19 +1,18 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-int maxVal = -987654321;
-int  m;
+set<int> s;
 
 int main() {
 	ios_base::sync_with_stdio(false); cin.tie(NULL); cout.tie(NULL);
-	
-	for(int i = 0; i < 9; i++){
-		int a = 0;
-		cin >> a;
-		if(maxVal < a) m = i;
-		maxVal = max(maxVal, a);
+
+	for(int i = 0; i < 10; i ++){
+		int t = 0;
+		cin >> t;
+		s.insert(t % 42);
 	}
-	cout << maxVal << '\n' << m + 1;
+	cout << s.size();
 
 	return 0;
 }
+

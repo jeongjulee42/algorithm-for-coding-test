@@ -1,60 +1,66 @@
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
 using namespace std;
-// 틀림. 이렇게 뽑을수가 없다.
-int n;
-int maxVal = INT_MIN;
-vector<char> cal;
-vector<int> num;
 
-int calculate(int a, int b, string c){
-    if(c == "+") return a + b;
-    else if(c == "-") return a - b;
-    else return a * b;
+int n, mp, mf, ms, mv, idx;
+int minVal = 987654321;
+struct Food{int p; int f; int s; int v; int c;};
+Food ary[15];
+vector<int> ret;
+
+bool cmp(vector<int> a, vector<int> b){
+	int z = min(a.size(), b.size());
+	int cnt = 0;
+	for(int i = 0; i < z; i++){
+		if(a[i] > b[i]) {
+			return false;
+		}else if (a[i] == b[i]) cnt++;
+	}
+	if(cnt == z && a.size() > b.size()) return false;
+	return true;
 }
 
-void combi(int start, vector<int> b, int k){
-    if(b.size() == k){
-        // int ret = 0;
-        //ㄱㅖ산
-        //먼저 계산
-
-        //나중 계산
-        // ----
-        // for(int i = 0; i < b.size(); i++){
-            
-        // }
-        // maxVal = max(maxVal, ret);
-        for(int i = 0; i < b.size(); i++) cout << b[i] << " ";
-        cout << '\n';
-    }
-    for(int i = start + 1; i < cal.size(); i ++){
-        b.push_back(i);
-        combi(i, b, k);
-        b.pop_back();
-    }
+int main() {
+	ios_base::sync_with_stdio(false); cin.tie(NULL); cout.tie(NULL);
+	
+	cin >> n;
+	cin >> mp >> mf >> ms >> mv;
+	for(int i = 0; i < n; i++){
+		int p, f, s, v, c;
+		cin >> p >> f >> s >> v >> c;
+		ary[i] = {p, f, s, v, c};
+	}
+	for(int i = 0; i < (1 << n); i++){
+		int p = 0, f = 0, s = 0, v = 0, c = 0;
+		vector<int> temp;
+		for(int j = 0; j < n; j++){
+			if(i & (1 << j)){
+				p += ary[j].p; f += ary[j].f; s += ary[j].s; v += ary[j].v; c += ary[j].c;
+				temp.push_back(j + 1);
+			}
+		}
+		if(p >= mp && f >= mf && s >= ms && v >= mv && minVal >= c){
+			if(minVal > c){
+				minVal = c;
+				ret.clear();
+				for(int z : temp) ret.push_back(z);
+			}
+			else{
+				sort(temp.begin(), temp.end());
+				if(ret.size() == 0) {
+					for(int z : temp) ret.push_back(z);
+				}
+				else if(cmp(temp, ret)){
+					ret.clear();
+					for(int z : temp) ret.push_back(z);
+				}
+			}
+		}
+	}
+	if(minVal == 987654321) cout << -1;
+	else {
+		cout << minVal << '\n' ;
+		for(int z : ret) cout << z << " ";
+	}
+	return 0;
 }
 
-int main(){
-    ios::sync_with_stdio(0); cin.tie(NULL); cout.tie(NULL);
-
-    cin >> n;
-    for(int i = 0; i < n; i++){
-        if(i % 2 == 0){
-            int temp = 0;
-            cin >> temp;
-            num.push_back(temp);
-        }else{
-            char temp = '0';
-            cin >> temp;
-            cal.push_back(temp);
-        }
-    }
-
-    for(int i = 0; i <= cal.size(); i++){
-        vector<int> b;
-        combi(-1, b, i);
-    }
-    cout << maxVal << '\n';
-    return 0;
-}
-i < int(ceil(double(n) / 2))
