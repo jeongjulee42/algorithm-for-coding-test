@@ -8,14 +8,14 @@ Food ary[15];
 vector<int> ret;
 
 bool cmp(vector<int> a, vector<int> b){
-	int z = min(a.size(), b.size());
+	int minVal = min(a.size(), b.size());
 	int cnt = 0;
-	for(int i = 0; i < z; i++){
-		if(a[i] > b[i]) {
-			return false;
-		}else if (a[i] == b[i]) cnt++;
+	for(int i = 0; i < minVal; i++){
+		if(a[i] < b[i]) return true;
+		else if(a[i] == b[i]) cnt++;
+		else return false;
 	}
-	if(cnt == z && a.size() > b.size()) return false;
+	if(cnt == minVal && a.size() > b.size()) return false;
 	return true;
 }
 
