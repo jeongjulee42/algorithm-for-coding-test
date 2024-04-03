@@ -1,21 +1,32 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-int n, mp, mf, ms, mv, idx;
-int minVal = 987654321;
-struct Food{int p; int f; int s; int v; int c;};
-Food ary[15];
-vector<int> ret;
+const int INF = 987654321;
+int n, minVal = INF, sum;
+vector<int> v[11];
+int ary[11];
+bool visited[11];
+int cnt;
 
-bool cmp(vector<int> a, vector<int> b){
-	int minVal = min(a.size(), b.size());
-	int cnt = 0;
-	for(int i = 0; i < minVal; i++){
-		if(a[i] < b[i]) return true;
-		else if(a[i] == b[i]) cnt++;
-		else return false;
+void go(int here, vector<int> a){
+	visited[here] = 1;
+	cnt ++;
+	for(int there : v[here]){
+		if(visited[there]) continue;
+		if(find(a.begin(), a.end(), there) == a.end()) continue;
+		go(there, a);
 	}
-	if(cnt == minVal && a.size() > b.size()) return false;
+}
+
+bool check(vector<int> a, vector<int> b){
+	memset(visited, 0, sizeof(visited));
+	cnt = 0;
+	go(a[0], a);
+	if(cnt != a.size()) return false;
+	memset(visited, 0, sizeof(visited));
+	cnt = 0;
+	go(b[0], b);
+	if(cnt != b.size()) return false;
 	return true;
 }
 
@@ -23,44 +34,36 @@ int main() {
 	ios_base::sync_with_stdio(false); cin.tie(NULL); cout.tie(NULL);
 	
 	cin >> n;
-	cin >> mp >> mf >> ms >> mv;
-	for(int i = 0; i < n; i++){
-		int p, f, s, v, c;
-		cin >> p >> f >> s >> v >> c;
-		ary[i] = {p, f, s, v, c};
+	for(int i = 1; i <= n; i++) {
+		cin >> ary[i];
+		sum += ary[i];
 	}
-	for(int i = 0; i < (1 << n); i++){
-		int p = 0, f = 0, s = 0, v = 0, c = 0;
-		vector<int> temp;
+	for(int i = 1; i <= n; i++){
+		int idx = 0;
+		cin >> idx;
+		for(int j = 0; j < idx; j++){
+			int temp = 0;
+			cin >> temp;
+			v[i].push_back(temp);
+		}
+	}
+	for(int i = 1; i < (1 << n) - 1; i++){
+		vector<int> red;
+		vector<int> blue;
 		for(int j = 0; j < n; j++){
 			if(i & (1 << j)){
-				p += ary[j].p; f += ary[j].f; s += ary[j].s; v += ary[j].v; c += ary[j].c;
-				temp.push_back(j + 1);
+				red.push_back(j + 1);
 			}
+			else blue.push_back(j + 1);
 		}
-		if(p >= mp && f >= mf && s >= ms && v >= mv && minVal >= c){
-			if(minVal > c){
-				minVal = c;
-				ret.clear();
-				for(int z : temp) ret.push_back(z);
-			}
-			else{
-				sort(temp.begin(), temp.end());
-				if(ret.size() == 0) {
-					for(int z : temp) ret.push_back(z);
-				}
-				else if(cmp(temp, ret)){
-					ret.clear();
-					for(int z : temp) ret.push_back(z);
-				}
-			}
+		if(check(red, blue)){
+			int temp = 0;
+			for(int r : red) temp += ary[r];
+			minVal = min(minVal, abs(temp - (sum - temp)));
 		}
 	}
-	if(minVal == 987654321) cout << -1;
-	else {
-		cout << minVal << '\n' ;
-		for(int z : ret) cout << z << " ";
-	}
+	if(minVal == INF) cout << -1 << '\n';
+	else cout << minVal << '\n';
 	return 0;
 }
 
