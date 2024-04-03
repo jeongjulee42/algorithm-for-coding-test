@@ -1,69 +1,41 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-const int INF = 987654321;
-int n, minVal = INF, sum;
-vector<int> v[11];
-int ary[11];
-bool visited[11];
-int cnt;
+int r, c, a;
+char ary[20][20];
+int dy[] = {-1, 0, 1, 0};
+int dx[] = {0, 1, 0, -1};
+int cnt, maxVal = -987654321;;
 
-void go(int here, vector<int> a){
-	visited[here] = 1;
-	cnt ++;
-	for(int there : v[here]){
-		if(visited[there]) continue;
-		if(find(a.begin(), a.end(), there) == a.end()) continue;
-		go(there, a);
+void go(int y, int x){
+	cnt++;
+	for(int i = 0; i < 4; i++){
+		int ny = y + dy[i];
+		int nx = x + dx[i];
+		if(ny >= r || nx >= c || ny < 0 || nx < 0) continue;
+		int temp = ary[ny][nx] - 'A';
+		if((1 << temp) & a) continue;
+		a |= (1 << temp);
+		go(ny, nx);
+		a &= ~(1 << temp);
 	}
-}
-
-bool check(vector<int> a, vector<int> b){
-	memset(visited, 0, sizeof(visited));
-	cnt = 0;
-	go(a[0], a);
-	if(cnt != a.size()) return false;
-	memset(visited, 0, sizeof(visited));
-	cnt = 0;
-	go(b[0], b);
-	if(cnt != b.size()) return false;
-	return true;
+	maxVal = max(maxVal, cnt);
+	cnt--;
 }
 
 int main() {
 	ios_base::sync_with_stdio(false); cin.tie(NULL); cout.tie(NULL);
 	
-	cin >> n;
-	for(int i = 1; i <= n; i++) {
-		cin >> ary[i];
-		sum += ary[i];
-	}
-	for(int i = 1; i <= n; i++){
-		int idx = 0;
-		cin >> idx;
-		for(int j = 0; j < idx; j++){
-			int temp = 0;
-			cin >> temp;
-			v[i].push_back(temp);
+	cin >> r >> c;
+	for(int i = 0; i < r; i++){
+		for(int j = 0; j < c; j++){
+			cin >> ary[i][j];
 		}
 	}
-	for(int i = 1; i < (1 << n) - 1; i++){
-		vector<int> red;
-		vector<int> blue;
-		for(int j = 0; j < n; j++){
-			if(i & (1 << j)){
-				red.push_back(j + 1);
-			}
-			else blue.push_back(j + 1);
-		}
-		if(check(red, blue)){
-			int temp = 0;
-			for(int r : red) temp += ary[r];
-			minVal = min(minVal, abs(temp - (sum - temp)));
-		}
-	}
-	if(minVal == INF) cout << -1 << '\n';
-	else cout << minVal << '\n';
+	int temp = ary[0][0] - 'A';
+	a |= (1 << temp);
+	go(0,0);
+	cout << maxVal << '\n';
 	return 0;
 }
 
