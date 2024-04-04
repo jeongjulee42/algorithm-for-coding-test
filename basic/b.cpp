@@ -1,46 +1,39 @@
 #include <bits/stdc++.h>
+#include <bitset>
 using namespace std;
 
-int n, k, m;
-vector<char> start = {'a','n','t','i','c'};
-vector<string> v;
-
-void go(int m, int cnt){
-	
-	if(cnt == k - 5){
-		
-		return;
-	}
-
-}
+int t;
 
 int main() {
 	ios_base::sync_with_stdio(false); cin.tie(NULL); cout.tie(NULL);
 	
-	cin >> n >> k;
-	for(int i = 0; i < n; i++){
-		string str = "";
+	cin >> t;
+	for(int i = 0; i < t; i++){
+		string str = ""; int arySize = 0; int num = 0;
 		cin >> str;
-		str = str.substr(4, str.size() - 8);
-		set<char> s;
+		cin >> arySize;
+		
+		int temp = 1, front = 0, back = 0;
 		for(int j = 0; j < str.size(); j++){
-			if(find(start.begin(), start.end(), str[j]) == start.end()){
-				s.insert(str[j]);
+			if(str[j] == 'R') temp *= -1;
+			else if(str[j] == 'D'){
+				if(temp < 0) back++;
+				else front++;
 			}
 		}
-		str = "";
-		for(char c : s) str += c;
-		v.push_back(str);
+		if(arySize < front + back) ary = "error";
+		else if(arySize == front + back) ary = "[]";
+		else{
+			ary = ary.substr(0, ary.size() - (back * 2) - 1);
+			ary = ary.substr(front * 2 + 1);
+			if(temp < 0) {
+				reverse(ary.begin(), ary.end());
+			}
+		}
+		v.push_back(ary);
 	}
-	if(k < 5) {
-		cout << 0 << '\n';
-		exit(0);
-	}
-	for(int i = 0; i < 5; i++){
-		m |= (1 << (start[i] - 'a'));
-	}
-	
-	
+
+
 	return 0;
 }
 
