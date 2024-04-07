@@ -1,25 +1,19 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-int n, score, maxVal;
-double sum;
-double ary[1004];
+int ary[31];
+int n;
 
 int main() {
 	ios_base::sync_with_stdio(false); cin.tie(NULL); cout.tie(NULL);
 	
-	cin >> n;
-	for(int i = 0; i < n; i++){
-		cin >> score;
-		maxVal = max(maxVal, score);
-		ary[i] = score;
+	for(int i = 0; i < 28; i++){
+		cin >> n;
+		ary[n] = 1;
 	}
-	for(int i = 0; i < n; i++){
-		ary[i] = double(ary[i] / maxVal) * 100;
-		sum += ary[i];
+	for(int i = 1; i < 31; i++){
+		if(ary[i] == 0)cout << i << '\n';
 	}
-	cout.precision(4);
-	cout << sum / n << '\n';
 	
 	return 0;
 }
