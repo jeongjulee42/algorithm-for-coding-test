@@ -1,37 +1,25 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-int n;
-stack<pair<long long, int>> stk;
-long long inpt, cnt;
+int from, to, n, idx = 0, ret = 1;
 
 int main() {
 	ios_base::sync_with_stdio(false); cin.tie(NULL); cout.tie(NULL);
-	
+
 	cin >> n;
+	vector<pair<int, int>> v;
 	for(int i = 0; i < n; i++){
-		cin >> inpt;
-		if(stk.size()){
-			if(stk.top().first > inpt){
-				cnt++;
-				stk.push({inpt, 1});
-			}
-			else if (stk.top().first <= inpt){
-				int num = 1;
-				while(stk.size() && stk.top().first <= inpt){
-					auto temp = stk.top();
-					if(temp.first == inpt) num += temp.second;
-					stk.pop();
-					cnt += temp.second;
-				}
-				if(stk.size()) cnt++;
-				stk.push({inpt, num});
-			}
-		}else{
-			stk.push({inpt, 1});
-		}
+		cin >> from >> to;
+		v.push_back({to, from});
 	}
-	cout << cnt << '\n';
+	sort(v.begin(), v.end());
+	from = v[0].second;
+	to = v[0].first;
+	for(int i = 1; i < n; i++){
+		if(v[i].second < to) continue;
+		from = v[i].second; to = v[i].first; ret++;
+	}
+	cout << ret << '\n';
 	return 0;
 }
 
