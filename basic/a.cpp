@@ -1,35 +1,30 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-int n, k, m, v, c;
-long long ret;
-bool visited[300000];
+int n;
+double score;
 
 int main() {
 	ios_base::sync_with_stdio(false); cin.tie(NULL); cout.tie(NULL);
-	cin >> n >> k;
-	vector<pair<int, int>> adj;
-	vector<int> carry;
+	
+	cin >> n;
+	priority_queue<double> pq;
 	for(int i = 0; i < n; i++){
-		cin >> m >> v;
-		adj.push_back({m, v});
+		cin >> score;
+		if(pq.size() == 7){
+			pq.push(score); pq.pop();
+		}else pq.push(score);
 	}
-	sort(adj.begin(), adj.end());
-	for(int i = 0; i < k; i++){
-		cin >> c;
-		carry.push_back(c);
+	vector<double> temp;
+	while(pq.size()){
+		temp.push_back(pq.top());
+		pq.pop();
 	}
-	sort(carry.begin(), carry.end());
-	priority_queue<int> pq;
-	int j = 0;
-	for(int i = 0; i < k; i++){
-		while(j < n && adj[j].first <= carry[i]) pq.push(adj[j++].second);
-		if(pq.size()){
-			ret += pq.top(); pq.pop();
-		}
-	}
+	sort(temp.begin(), temp.end());
+	cout.precision(3);
+	cout << fixed;
+	for(double a : temp) cout << a << '\n';
 
-	cout << ret << '\n';
 	return 0;
 }
 
