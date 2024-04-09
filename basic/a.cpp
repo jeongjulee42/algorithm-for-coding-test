@@ -1,8 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-int n, d, c, ret;
-priority_queue<int,vector<int>, greater<int>> pq;
+int n, from, to, ret;
 vector<pair<int, int>> v;
 
 int main() {
@@ -10,18 +9,17 @@ int main() {
 	
 	cin >> n;
 	for(int i = 0; i < n; i++){
-		cin >> d >> c;
-		v.push_back({d, c});
+		cin >> from >> to;
+		v.push_back({from, to});
 	}
 	sort(v.begin(), v.end());
-	for(int i = 0; i < n; i++){
-		pq.push(v[i].second);
-		if(pq.size() > v[i].first){
-			pq.pop();
+	ret = v[0].first + v[0].second;
+	for(int i = 1; i < n; i++){
+		if(v[i].first < ret){
+			ret += v[i].second;
+		}else{
+			ret = v[i].first + v[i].second;
 		}
-	}
-	while(pq.size()){
-		ret += pq.top(); pq.pop();
 	}
 	cout << ret << '\n';
 	return 0;
