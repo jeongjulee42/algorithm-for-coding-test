@@ -1,23 +1,29 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-string str, fire;
-string ret;
+int n, d, c, ret;
+priority_queue<int,vector<int>, greater<int>> pq;
+vector<pair<int, int>> v;
 
 int main() {
 	ios_base::sync_with_stdio(false); cin.tie(NULL); cout.tie(NULL);
 	
-	cin >> str;
-	cin >> fire;
-	for(int i = 0; i < str.size(); i++){
-		ret += str[i];
-		if(ret.size() >= fire.size() && ret.substr(ret.size() - fire.size()) == fire){
-			ret.erase(ret.size() - fire.size());
+	cin >> n;
+	for(int i = 0; i < n; i++){
+		cin >> d >> c;
+		v.push_back({d, c});
+	}
+	sort(v.begin(), v.end());
+	for(int i = 0; i < n; i++){
+		pq.push(v[i].second);
+		if(pq.size() > v[i].first){
+			pq.pop();
 		}
 	}
-	if(ret.size() == 0) cout << "FRULA" << '\n';
-	else cout << ret << '\n';
-	
+	while(pq.size()){
+		ret += pq.top(); pq.pop();
+	}
+	cout << ret << '\n';
 	return 0;
 }
 
