@@ -1,40 +1,72 @@
 #include <bits/stdc++.h>
 using namespace std;
-
-int n, minVal = 1000000004, maxVal = -1000000004;
-int ary[11];
-int cal[4];
-
-int calc(int a, int b, int num){
-	if(num == 0) return a + b;
-	else if (num == 1) return a - b;
-	else if (num == 2) return a * b;
-	else return a / b;
+int n, m, a, r, c, s, d, z, ret;
+struct Shark{int r; int c; int s; int d; int z;};
+vector<Shark> v;
+int ary[100][100];
+int dy[] = {0, -1, 1, 0, 0};
+int dx[] = {0, 0, 0, 1, -1};
+bool cmp(Shark p, Shark q){
+	return p.z > q.z;
 }
-
 int main() {
 	ios_base::sync_with_stdio(false); cin.tie(NULL); cout.tie(NULL);
-
-	cin >> n;
-	for(int i = 0; i < n; i++) cin >> ary[i];
-	for(int i = 0; i < 4; i++) cin >> cal[i];
-	vector<int> v;
-	for(int i = 0; i < 4; i++){
-		for(int j = cal[i]; j > 0; j--){
-			v.push_back(i);
-		}
+	cin >> n >> m >> a;
+	for(int i = 0; i < a; i++){
+		cin >> r >> c >> s >> d >> z;
+		v.push_back({r - 1, c - 1, s, d, z});
 	}
-	sort(v.begin(), v.end());
-	do{
-		int ret = ary[0];
-		for(int i = 1; i < n; i++){
-			ret = calc(ret, ary[i], v[i - 1]);
+	sort(v.begin(), v.end(), cmp);
+	for(auto vv : v) ary[vv.r][vv.c] = vv.z;
+	for(int man = 0; man < m; man++){
+		vector<Shark> temp;
+		int rmv = 0;
+		for(int i = 0; i < n; i++){
+			if(ary[i][man]){
+				rmv = ary[i][man];
+				ret += rmv;
+				break;
+			}
 		}
-		minVal = min(minVal, ret);
-		maxVal = max(maxVal, ret);
-	}while(next_permutation(v.begin(), v.end()));
-
-	cout << maxVal << '\n' << minVal << '\n';
+		memset(ary, 0, sizeof(ary));
+		for(int k = 0; k < v.size(); k++){
+			Shark sh = v[k];
+			if(sh.z == rmv) continue;
+			int ny = sh.r;
+			int nx = sh.c;
+			if(sh.d < 3){
+				sh.s = sh.s % ((n - 1) * 2);
+			}else{	
+				sh.s = sh.s % ((m - 1) * 2);
+			}
+			for(int i = 0; i < sh.s; i++){
+				ny = sh.r + dy[sh.d];
+				nx = sh.c + dx[sh.d];
+				if(ny < 0) {
+					sh.d ++;
+					ny = sh.r + dy[sh.d];
+				}
+				else if (ny >= n) {
+					sh.d --;
+					ny = sh.r + dy[sh.d];
+				}
+				else if (nx < 0) {
+					sh.d --;
+					nx = sh.c + dx[sh.d];
+				}
+				else if (nx >= m) {
+					sh.d ++;
+					nx = sh.c + dx[sh.d];
+				}
+				sh.r = ny; sh.c = nx;
+			}
+			if(ary[ny][nx]) continue;
+			ary[ny][nx] = sh.z;
+			temp.push_back(sh);
+		}
+		v = temp;
+	}
+	cout << ret << '\n';
 	return 0;
 }
 
