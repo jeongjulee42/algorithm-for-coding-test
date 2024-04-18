@@ -1,45 +1,40 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-int t, k, num, dir;
-int ary[1001];
-vector<vector<int>> v(1000, vector<int>(8));
+int n, minVal = 1000000004, maxVal = -1000000004;
+int ary[11];
+int cal[4];
+
+int calc(int a, int b, int num){
+	if(num == 0) return a + b;
+	else if (num == 1) return a - b;
+	else if (num == 2) return a * b;
+	else return a / b;
+}
 
 int main() {
 	ios_base::sync_with_stdio(false); cin.tie(NULL); cout.tie(NULL);
 
-	cin >> t;
-	for(int i = 0; i < t; i++){
-		string str = "";
-		cin >> str;
-		for(int j = 0; j < 8; j++) v[i][j] = str[j] - '0';
-	}
-	cin >> k;
-	for(int i = 0; i < k; i++){
-		memset(ary, 0, sizeof(ary));
-		cin >> num >> dir;
-		ary[num - 1] = dir;
-		for(int j = num - 1; j > 0; j--){
-			if(v[j][6] != v[j - 1][2]) ary[j - 1] = -1 * ary[j];
-			else if (v[j][6] == v[j - 1][2]) break;
-		}
-		for(int j = num - 1; j < t - 1; j++){
-			if(v[j][2] != v[j + 1][6]) ary[j + 1] = -1 * ary[j];
-			else if (v[j][2] == v[j + 1][6]) break;
-		}
-		for(int j = 0; j < t; j++){
-			if(ary[j] == -1){
-				rotate(v[j].begin(), v[j].begin() + 1, v[j].end());
-			}else if(ary[j] == 1){
-				rotate(v[j].rbegin(), v[j].rbegin() + 1, v[j].rend());
-			}
+	cin >> n;
+	for(int i = 0; i < n; i++) cin >> ary[i];
+	for(int i = 0; i < 4; i++) cin >> cal[i];
+	vector<int> v;
+	for(int i = 0; i < 4; i++){
+		for(int j = cal[i]; j > 0; j--){
+			v.push_back(i);
 		}
 	}
-	int cnt = 0;
-	for(int i = 0; i < t; i++){
-		if(v[i][0] == 1) cnt++;
-	}
-	cout << cnt << '\n';
+	sort(v.begin(), v.end());
+	do{
+		int ret = ary[0];
+		for(int i = 1; i < n; i++){
+			ret = calc(ret, ary[i], v[i - 1]);
+		}
+		minVal = min(minVal, ret);
+		maxVal = max(maxVal, ret);
+	}while(next_permutation(v.begin(), v.end()));
+
+	cout << maxVal << '\n' << minVal << '\n';
 	return 0;
 }
 
