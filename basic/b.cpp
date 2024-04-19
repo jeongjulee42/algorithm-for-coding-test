@@ -1,39 +1,101 @@
 #include <bits/stdc++.h>
-#include <bitset>
 using namespace std;
-
-int t;
+//인접 조건 다시보기
+int n, m, t, x, d, k, temp;
+vector<vector<pair<int, int>>> v;
 
 int main() {
 	ios_base::sync_with_stdio(false); cin.tie(NULL); cout.tie(NULL);
-	
-	cin >> t;
-	for(int i = 0; i < t; i++){
-		string str = ""; int arySize = 0; int num = 0;
-		cin >> str;
-		cin >> arySize;
-		
-		int temp = 1, front = 0, back = 0;
-		for(int j = 0; j < str.size(); j++){
-			if(str[j] == 'R') temp *= -1;
-			else if(str[j] == 'D'){
-				if(temp < 0) back++;
-				else front++;
-			}
+
+	cin >> n >> m >> t;
+	vector<pair<int, int>> dummy;
+	v.push_back(dummy);
+	for(int i = 1; i <= n; i++){
+		vector<pair<int, int>> _v;
+		for(int j = 0; j < m; j++){
+			cin >> temp;
+			_v.push_back({temp, 0});
 		}
-		if(arySize < front + back) ary = "error";
-		else if(arySize == front + back) ary = "[]";
-		else{
-			ary = ary.substr(0, ary.size() - (back * 2) - 1);
-			ary = ary.substr(front * 2 + 1);
-			if(temp < 0) {
-				reverse(ary.begin(), ary.end());
-			}
-		}
-		v.push_back(ary);
+		v.push_back(_v);
 	}
-
-
+	for(int i = 0; i < t; i ++){
+		cin >> x >> d >> k;
+		cout << "====before=====" << '\n';
+		for(int j = 1; j <= n; j++){
+			for(int l = 0; l < m; l++){
+				if(v[j][l].second) cout << ' ' << ' ';
+				else cout << v[j][l].first << ' ';
+			}
+			cout << '\n';
+		}
+		for(int j = x; j <= n; j += x){
+			if(d == 1){
+				rotate(v[j].begin(), v[j].begin() + k, v[j].end());
+			}else{
+				rotate(v[j].rbegin(), v[j].rbegin() + k, v[j].rend());
+			}
+		}
+		cout << "====rotate=====" << '\n';
+		for(int j = 1; j <= n; j++){
+			for(int l = 0; l < m; l++){
+				if(v[j][l].second) cout << ' ' << ' ';
+				else cout << v[j][l].first << ' ';
+			}
+			cout << '\n';
+		}
+		int cnt = 0;
+		int cnt2 = 0;
+		int sum = 0;
+		for(int j = 0; j < m; j++){
+			int _te = 1005;
+			for(int l = 1; l <= n; l++){
+				if(v[l][j].second == 1) continue;
+				sum += v[l][j].first;
+				cnt++;
+				if(_te == v[l][j].first){
+					v[l - 1][j].second = 1;
+					v[l][j].second = 1;
+					cnt2++;
+				}else{
+					_te = v[l][j].first;
+				}
+			}
+		}
+		
+		cout << "====remove=====" << '\n';
+		for(int j = 1; j <= n; j++){
+			for(int l = 0; l < m; l++){
+				if(v[j][l].second) cout << ' ' << ' ';
+				else cout << v[j][l].first << ' ';
+			}
+			cout << '\n';
+		}
+		if(!cnt2){
+			sum /= cnt;
+			for(int j = 1; j <= n; j++){
+				for(int l = 0; l < m; l++){
+					if(v[j][l].first > sum) v[j][l].first --;
+					else if(v[j][l].first < sum) v[j][l].first ++;
+				}
+			}
+		}
+		cout << "====" << sum << "=====" << '\n';
+		for(int j = 1; j <= n; j++){
+			for(int l = 0; l < m; l++){
+				if(v[j][l].second) cout << ' ' << ' ';
+				else cout << v[j][l].first << ' ';
+			}
+			cout << '\n';
+		}
+	}
+	int ret = 0;
+	for(int i = 1; i <= n; i++){
+		for(int j = 0; j < m; j++){
+			if(v[i][j].second == 1) continue;
+			ret += v[i][j].first;
+		}
+	}
+	cout << ret << '\n';
 	return 0;
 }
 
