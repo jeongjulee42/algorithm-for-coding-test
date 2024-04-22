@@ -1,66 +1,79 @@
 #include<bits/stdc++.h>
 using namespace std;
-vector<vector<vector<int>>> v;
-int ary[8][8];
-int n, m, minVal = 987654321;
-int dy[] = {-1, 0, 1, 0};
-int dx[] = {0, 1, 0, -1};
-vector<pair<int, int>> cctv;
 
-void go(int num){
-	if(num >= cctv.size()){
-		int cnt = 0;
-		for(int i = 0; i < n; i++){
-			for(int j = 0; j < m; j++){
-				if(!ary[i][j]) cnt++;
-			}
-		}
-		minVal = min(minVal, cnt);
-		return;
-	}
-	int idx = ary[cctv[num].first][cctv[num].second] - 1;
-	for(int i = 0; i < v[idx].size(); i++){
-		vector<pair<int, int>> temp;
-		for(int j = 0; j < v[idx][i].size(); j++){
-			int nidx = v[idx][i][j];
-			int y = cctv[num].first;
-			int x = cctv[num].second;
-			while(1){
-				int ny = y + dy[nidx]; int nx = x + dx[nidx];
-				if(ny >= n || nx >= m || ny < 0 || nx < 0 || ary[ny][nx] == 6) break;
-				y = ny; x = nx;
-				if(ary[ny][nx]) continue;
-				ary[ny][nx] = -1;
-				temp.push_back({ny, nx});
-			}
-		}
-		go(num + 1);
-		for(int j = 0; j < temp.size(); j++){
-			ary[temp[j].first][temp[j].second] = 0;
-		}
-	}
-}
+int n, m, t, x, d, k;
+vector<vector<int>> v(50);
+
+
 
 int main(){
 	ios_base::sync_with_stdio(0); cin.tie(NULL); cout.tie(NULL);
 	
-	v.push_back({{0}, {1}, {2}, {3}});
-	v.push_back({{1,3}, {0, 2}});
-	v.push_back({{0,1}, {1,2}, {2,3}, {3,0}});
-	v.push_back({{0, 1, 2}, {1, 2, 3}, {2, 3, 0}, {3, 0, 1}});
-	v.push_back({{0, 1, 2, 3}});
-
-	cin >> n >> m;
+	cin >> n >> m >> t;
 	for(int i = 0; i < n; i++){
-		for(int j = 0; j < m; j++){
-			cin >> ary[i][j];
-			if(ary[i][j]){
-				if(ary[i][j] == 6) continue;
-				else cctv.push_back({i, j});
+		for(int j = 0; j < m; j++) {
+			int temp = 0;
+			cin >> temp;
+			v[i].push_back(temp);
+		}
+	}
+	for(int z = 0; z < t; z++){
+		cin >> x >> d >> k;
+		// 회전
+		for(int i = x - 1; i < n; i += x){
+			if(d == 1){
+				rotate(v[i].begin(), v[i].begin() + (k % m), v[i].end());
+			}else{
+				rotate(v[i].rbegin(), v[i].rbegin() + (k % m), v[i].rend());
+			}
+		}
+		// 인접한것 찾기
+		int cnt = 0; int sum = 0;
+		vector<pair<int, int>> temp;
+		for(int i = 0; i < n; i++){
+			for(int j = 0; j < m; j++){
+				if(!v[i][j]) continue;
+				sum += v[i][j];
+				cnt++;
+				if(v[i][j] == v[i][(j + 1) % m] || v[i][j] == v[i][(j - 1 + m) % m]){
+					temp.push_back({i, j});
+				}
+			}
+		}
+		for(int i = 0; i < m; i++){
+			for(int j = 0; j < n - 1; j++){
+				if(!v[j][i]) continue;
+				if(v[j][i] == v[j + 1][i]){
+					temp.push_back({j, i});
+					temp.push_back({j + 1, i});
+				}
+			}
+		}
+
+		// 인접한것 제거
+		for(int i = 0; i < temp.size(); i++){
+			v[temp[i].first][temp[i].second] = 0;
+		}
+
+		// 인접하지 않으면 평균 구해서 계산
+		if(!temp.size()){
+			double _num = double(sum) / cnt;
+			for(int i = 0; i < n; i++){
+				for(int j = 0; j < m; j++){
+					if(!v[i][j]) continue;
+					if(v[i][j] > _num) v[i][j]--;
+					else if (v[i][j] < _num) v[i][j]++;
+				}
 			}
 		}
 	}
-	go(0);
-	cout << minVal << '\n'; 
+	
+	int ret = 0;
+	for(int i = 0; i < n; i++){
+		for(int j = 0; j < m; j++){
+			ret += v[i][j];
+		}
+	}
+	cout << ret << '\n';
 	return 0;
 }
