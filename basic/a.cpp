@@ -1,8 +1,6 @@
 #include<bits/stdc++.h>
 using namespace std;
-
 typedef long long ll;
-
 ll n, m, ret = 1e18;
 ll ary[100004];
 bool check(int mid){
@@ -18,10 +16,8 @@ bool check(int mid){
 	}
 	return num < m;
 }
-
 int main(){
 	ios_base::sync_with_stdio(0); cin.tie(NULL); cout.tie(NULL);
-
 	cin >> n >> m;
 	ll hi = 0, mid, lo = 0;
 	for(int i = 0; i < n; i++) cin >> ary[i], hi += ary[i], lo = max(lo, ary[i]);
