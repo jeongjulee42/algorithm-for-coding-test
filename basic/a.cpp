@@ -1,32 +1,38 @@
 #include<bits/stdc++.h>
 using namespace std;
-#define first f
-#define second s
+
 typedef long long ll;
-ll n, m, a[300004], ret = 1e18;
 
-bool check(ll mid){
-	ll num = 0;
-	for(int i = 0; i < m; i++){
-		num += a[i] / mid;
-		if(a[i] % mid) num++;
+ll n, m, ret = 1e18;
+ll ary[100004];
+bool check(int mid){
+	int num = 0;
+	int sum = 0;
+	for(int i = 0; i < n; i++){
+		if(sum + ary[i] > mid){
+			sum = ary[i];
+			num++;
+		}else {
+			sum += ary[i];
+		}
 	}
-	return n >= num;
+	return num < m;
 }
-
 
 int main(){
 	ios_base::sync_with_stdio(0); cin.tie(NULL); cout.tie(NULL);
 
 	cin >> n >> m;
-	ll lo = 1, hi = 0, mid;
-	for(int i = 0; i < m; i++) cin >> a[i], hi = max(hi, a[i]);
+	ll hi = 0, mid, lo = 0;
+	for(int i = 0; i < n; i++) cin >> ary[i], hi += ary[i], lo = max(lo, ary[i]);
 	while(lo <= hi){
 		mid = (lo + hi) / 2;
 		if(check(mid)){
 			ret = min(ret, mid);
 			hi = mid - 1;
-		}else lo = mid + 1;
+		}else{
+			lo = mid + 1;
+		}
 	}
 	cout << ret << '\n';
 	return 0;
