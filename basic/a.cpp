@@ -1,35 +1,33 @@
 #include<bits/stdc++.h>
 using namespace std;
 typedef long long ll;
-ll n, m, ret = 1e18;
-ll ary[100004];
-bool check(int mid){
-	int num = 0;
-	int sum = 0;
-	for(int i = 0; i < n; i++){
-		if(sum + ary[i] > mid){
-			sum = ary[i];
-			num++;
-		}else {
-			sum += ary[i];
-		}
-	}
-	return num < m;
-}
+
+int t, n, m;
+
 int main(){
 	ios_base::sync_with_stdio(0); cin.tie(NULL); cout.tie(NULL);
-	cin >> n >> m;
-	ll hi = 0, mid, lo = 0;
-	for(int i = 0; i < n; i++) cin >> ary[i], hi += ary[i], lo = max(lo, ary[i]);
-	while(lo <= hi){
-		mid = (lo + hi) / 2;
-		if(check(mid)){
-			ret = min(ret, mid);
-			hi = mid - 1;
-		}else{
-			lo = mid + 1;
+	
+	cin >> t;
+	for(int i = 0; i < t; i++){
+		cin >> n >> m;
+		ll ret = 0;
+		vector<int> a;
+		vector<int> b;
+		int temp = 0;
+		for(int j = 0; j < n; j++){
+			cin >> temp;
+			a.push_back(temp);
 		}
+		for(int j = 0; j < m; j++){
+			cin >> temp;
+			b.push_back(temp);
+		}
+		sort(b.begin(), b.end());
+		for(int j = 0; j < a.size(); j++){
+			ret += lower_bound(b.begin(), b.end(), a[j]) - b.begin();
+		}
+		cout << ret << '\n';
 	}
-	cout << ret << '\n';
+
 	return 0;
 }
