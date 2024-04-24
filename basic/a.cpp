@@ -2,32 +2,52 @@
 using namespace std;
 typedef long long ll;
 
-int t, n, m;
+struct Room{ll t; ll a; ll h;};
+Room ary[123456];
+ll atk, n, t, a, h, ret = 9e18;
+
+bool check(ll hp, ll at){
+	bool flag = true;
+	ll maxHp = hp;
+	for(int i = 0; i < n; i++){
+		Room here = ary[i];
+		if(here.t == 2){
+			hp = min(maxHp, hp + here.h);
+			at += here.a;
+		}else{
+			ll num = here.h / at;
+			if(here.h % at) num++;
+			cout << num << ":" << here.h << ":" << at << '\n';
+			hp -= (here.a * (num - 1));
+			if(hp <= 0){
+				flag = false;
+				break;
+			}
+		}
+	}
+	cout << maxHp << ":" << flag << '\n';
+	return flag;
+}
 
 int main(){
 	ios_base::sync_with_stdio(0); cin.tie(NULL); cout.tie(NULL);
 	
-	cin >> t;
-	for(int i = 0; i < t; i++){
-		cin >> n >> m;
-		ll ret = 0;
-		vector<int> a;
-		vector<int> b;
-		int temp = 0;
-		for(int j = 0; j < n; j++){
-			cin >> temp;
-			a.push_back(temp);
+	cin >> n >> atk;
+	ll lo = 0, mid = 0, hi = 0;
+	for(int i = 0; i < n; i++){
+		cin >> t >> a >> h;
+		ary[i] = {t, a, h};
+		if(t == 1){
+			hi += (h / atk + 1) * a;
 		}
-		for(int j = 0; j < m; j++){
-			cin >> temp;
-			b.push_back(temp);
-		}
-		sort(b.begin(), b.end());
-		for(int j = 0; j < a.size(); j++){
-			ret += lower_bound(b.begin(), b.end(), a[j]) - b.begin();
-		}
-		cout << ret << '\n';
 	}
-
+	while(lo <= hi){
+		mid = (lo + hi) / 2;
+		if(check(mid, atk)){
+			ret = min(ret, mid);
+			hi = mid - 1;
+		}else lo = mid + 1;
+	}
+	cout << ret << '\n';
 	return 0;
 }
