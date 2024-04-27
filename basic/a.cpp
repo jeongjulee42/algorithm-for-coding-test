@@ -2,33 +2,21 @@
 using namespace std;
 typedef long long ll;
 
-ll ary[1000004];
-ll s, c, ret = 0;
-
-bool check(int mid){
-	int num = 0;
-	for(int i = 0; i < s; i++){
-		num += ary[i] / mid;
-	}
-	return num >= c;
-}
+int n, m, l, r;
+vector<int> ary;
 
 int main(){
 	ios_base::sync_with_stdio(0); cin.tie(NULL); cout.tie(NULL);
 	
-	cin >> s >> c;
-	ll sum = 0;
-	ll hi = 0, mid = 0, lo = 1;
-	for(int i = 0; i < s; i++) cin >> ary[i], sum+= ary[i], hi = max(hi, ary[i]);
-	while(lo <= hi){
-		mid = (lo + hi) / 2;
-		if(check(mid)){
-			lo = mid + 1;
-			ret = max(ret, mid);
-		}else{
-			hi = mid - 1;
-		}
+	cin >> n >> m;
+	for(int i = 0; i < n; i++){
+		ary.push_back(i + 1);
 	}
-	cout << sum - (c * ret) << '\n';
+	for(int i = 0; i < m; i++){
+		cin >> l >> r;
+		reverse(ary.begin() + l - 1, ary.begin() + r);
+	}
+	for(int i : ary) cout << i << ' ';
+	cout << '\n';
 	return 0;
 }
