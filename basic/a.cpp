@@ -2,21 +2,23 @@
 using namespace std;
 typedef long long ll;
 
-int n, m, l, r;
-vector<int> ary;
+int n, a[1001], cnt[1001], ret;
 
 int main(){
 	ios_base::sync_with_stdio(0); cin.tie(NULL); cout.tie(NULL);
 	
-	cin >> n >> m;
+	cin >> n;
+	for(int i = 0; i < n; i++) cin >>a[i];
+
 	for(int i = 0; i < n; i++){
-		ary.push_back(i + 1);
+		int maxVal = 0;
+		for(int j = 0; j < i; j++){
+			if(a[j] < a[i] && maxVal < cnt[j]) maxVal = cnt[j];
+		}
+		cnt[i] = maxVal + 1;
+		ret = max(ret, cnt[i]);
 	}
-	for(int i = 0; i < m; i++){
-		cin >> l >> r;
-		reverse(ary.begin() + l - 1, ary.begin() + r);
-	}
-	for(int i : ary) cout << i << ' ';
-	cout << '\n';
+	cout << ret << '\n';
+	
 	return 0;
 }
