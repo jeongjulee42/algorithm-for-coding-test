@@ -2,35 +2,27 @@
 using namespace std;
 typedef long long ll;
 
-int n, lis[1000004], len, num;
-pair<int, int> ans[1000004];
-stack<int> stk;
-const int INF = 1e9 + 4;
+double ary[10004], ret;
+int n;
+
 
 int main(){
 	ios_base::sync_with_stdio(0); cin.tie(NULL); cout.tie(NULL);
-	
-	fill(lis, lis + 1000004, INF);
+
 	cin >> n;
+	for(int i = 0; i < n; i++) cin >> ary[i], ret = max(ret, ary[i]);
 	for(int i = 0; i < n; i++){
-		cin >> num;
-		auto lowerPos = lower_bound(lis, lis + len, num);
-		int _pos = (int)(lowerPos - lis);
-		if(*lowerPos == INF) len++;
-		*lowerPos = num;
-		ans[i].first = _pos;
-		ans[i].second = num;
-	}
-	cout << len << '\n';
-	for(int i = n - 1; i >= 0; i--){
-		if(ans[i].first == len - 1){
-			stk.push(ans[i].second); len--;
+		if(ary[i] < 1) continue;
+		double maxVal = 1;
+		for(int j = 0; j <= i; j++){
+			if(maxVal < 1)maxVal = 1;
+			maxVal *= ary[j];
 		}
+		ret = max(ret, maxVal);
 	}
-	while(stk.size()){
-		cout << stk.top() << ' ';
-		stk.pop();
-	}
+	cout << fixed;
+	cout.precision(3);
+	cout << ret << '\n';
 
 	return 0;
 }
