@@ -2,34 +2,36 @@
 using namespace std;
 typedef long long ll;
 
-int lis[1004];
-pair<int, int> p[1004];
-int n, ret, len, num;
+pair<int, int> p[104];
+int lis[104];
+vector<int> temp;
+int n, ret, a, b, len;
 
 int main(){
 	ios_base::sync_with_stdio(0); cin.tie(NULL); cout.tie(NULL);
 
 	cin >> n;
-	for(int i = 0; i < n; i++ ){
-		cin >> num;
-		auto lp = lower_bound(lis, lis + len, num);
-		int _pos = (int)(lp - lis);
-		if(*lp == 0) len++;
-		*lp = num;
-		p[i] = {_pos, num};
+	for(int i = 0; i < n; i++){
+		cin >> a >> b;
+		p[i] = {a, b};
+		temp.push_back(b);
 	}
-	cout << len << '\n';
-
-	stack<int> stk;
-	for(int i = n - 1; i >= 0; i--){
-		if(p[i].first == len - 1){
-			stk.push(p[i].second); len --;
+	sort(temp.begin(), temp.end());
+	for(int i = 0; i < n; i++){
+		for(int j = 0; j < temp.size(); j++){
+			if(p[i].second == temp[j]){
+				p[i].second = j;
+			}
 		}
 	}
-	while(stk.size()) {
-		cout << stk.top() << ' ';
-		stk.pop();
+	sort(p, p + n);
+	for(int i = 0; i < n; i++){
+		int num = p[i].second;
+		auto lp = lower_bound(lis, lis + len, num);
+		if(*lp == 0) len++;
+		*lp = num;
 	}
+	cout << n - len << '\n';
 
 	return 0;
 }
