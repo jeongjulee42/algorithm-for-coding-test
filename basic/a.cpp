@@ -1,40 +1,31 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-int num;
-int ary[1000004];
-vector<int> ret;
+int n, k;
+int ary[10004];
+int m[104];
 
 int main(){
 	ios_base::sync_with_stdio(0); cin.tie(NULL); cout.tie(NULL);
 	
-	cin >> num;
+	cin >> n >> k;
+	for(int i = 0; i < n; i++) cin >> m[i];
+
 	queue<int> q;
-	q.push(num);
+	q.push(0);
 	while(q.size()){
 		int temp = q.front(); q.pop();
-		if(temp == 1) {
-			ret.push_back(1);
-			break;
+		if(temp == k){
+			cout << ary[temp] << '\n';
+			exit(0);
 		}
-		if(!ary[temp - 1]){
-			q.push(temp - 1);
-			ary[temp - 1] = temp;
-		}
-		if(temp % 2 == 0 && !ary[temp / 2]) {
-			q.push(temp / 2); ary[temp / 2] = temp;
-		}
-		if(temp % 3 == 0 && !ary[temp / 3]){
-			q.push(temp / 3); ary[temp / 3] = temp;
+		for(int i = 0; i < n; i++){
+			if(temp + m[i] > k) continue;
+			if(ary[temp + m[i]]) continue;
+			ary[temp + m[i]] = ary[temp] + 1;
+			q.push(temp + m[i]);
 		}
 	}
-	int temp = 1;
-	while(ary[temp]){
-		ret.push_back(ary[temp]);
-		temp = ary[temp];
-	}
-	cout << ret.size() - 1 << '\n';
-	reverse(ret.begin(), ret.end());
-	for(int a : ret) cout << a << ' ';
+	cout << -1 << '\n';
 	return 0;
 }
