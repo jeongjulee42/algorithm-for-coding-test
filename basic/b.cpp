@@ -1,35 +1,33 @@
 #include<bits/stdc++.h>
 using namespace std;
-typedef long long ll;
 
-ll ary[1000004];
-ll s, c, ret = 0;
-bool check(int mid){
-	cout << mid << '\n';
-	int num = 0;
-	for(int i = 0; i < s; i++){
-		if(ary[i] / mid == 0) return false;
-		num += ary[i] / mid;
-	}
-	return num >= c;
-}
+int ary[54][54][54], n, m, c, a, b;
+int adj[54][54];
 
 int main(){
 	ios_base::sync_with_stdio(0); cin.tie(NULL); cout.tie(NULL);
 	
-	cin >> s >> c;
-	ll sum = 0;
-	ll hi = 0, mid = 0, lo = 1;
-	for(int i = 0; i < s; i++) cin >> ary[i], sum+= ary[i], hi = max(hi, ary[i]);
-	while(lo <= hi){
-		mid = (lo + hi) / 2;
-		if(check(mid)){
-			lo = mid + 1;
-			ret = max(ret, mid);
-		}else{
-			hi = mid - 1;
+	cin >> n >> m >> c;
+	for(int i = 0; i < c; i++){
+		cin >> a >> b;
+		adj[a][b] = 99;
+	}
+
+	ary[1][1][0] = 1;
+	for(int i = 1; i <= n; i++){
+		for(int j = 1; j <= m; j++){
+			for(int k = 0; k <= c; k++){
+				if(adj[i][j] == 99){
+					ary[i][j][k + 1] = ary[i - 1][j][k] + ary[i][j - 1][k];
+				}
+				else ary[i][j][k] = ary[i - 1][j][k] + ary[i][j - 1][k];
+			}
 		}
 	}
-	cout << sum - (c * ret) << '\n';
+
+	for(int i = 0; i <= c; i++){
+		cout << ary[n][m][i] << ' ';
+	}
+	cout << '\n';
 	return 0;
 }
