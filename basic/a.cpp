@@ -1,29 +1,24 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-stack<char> stk;
-string str;
+int ary[9][9];
 
 int main(){
 	ios_base::sync_with_stdio(0); cin.tie(NULL); cout.tie(NULL);
-	cin >> str;
-	for(int i = 0; i < str.size(); i++){
-		char c = str[i];
-		if(c == 'j'){
-			if(stk.size() && (stk.top() == 'l' || stk.top() == 'n'))stk.pop();
-		} else if(c == '='){
-			if(stk.size() && (stk.top() == 's' || stk.top() == 'c')) stk.pop();
-			else if (stk.size() && stk.top() == 'z'){
-				stk.pop();
-				if(stk.size() && stk.top() == 'd'){
-					stk.pop();
-				}
+	int ret = -1;
+	int ii = 0, jj = 0;
+	for(int i = 0; i < 9; i++){
+		for(int j = 0; j < 9; j++) {
+			cin >> ary[i][j];
+			int temp = ret;
+			ret = max(ret, ary[i][j]);
+			if(ret != temp){
+				ii = i + 1;
+				jj = j + 1;
 			}
-		} else if(c == '-'){
-			if(stk.size() && (stk.top() == 'd' || stk.top() == 'c')) stk.pop();
 		}
-		stk.push(c);
 	}
-	cout << stk.size() << '\n';
+
+	cout << ret << '\n' << ii << ' ' << jj << '\n';
 	return 0;
 }
