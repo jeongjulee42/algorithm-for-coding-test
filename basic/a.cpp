@@ -1,24 +1,32 @@
 #include<bits/stdc++.h>
 using namespace std;
+typedef long long ll;
 
-int ary[9][9];
+ll n, dp[31][31];
+
+ll go(int whole, int not_whole){
+	if(whole == 0 && not_whole == 0) return 1;
+	if(dp[whole][not_whole]) return dp[whole][not_whole];
+	ll &ret = dp[whole][not_whole];
+	if(whole > 0) ret += go(whole - 1, not_whole + 1);
+	if(not_whole > 0) ret += go(whole, not_whole - 1);
+	return ret;
+}
 
 int main(){
 	ios_base::sync_with_stdio(0); cin.tie(NULL); cout.tie(NULL);
-	int ret = -1;
-	int ii = 0, jj = 0;
-	for(int i = 0; i < 9; i++){
-		for(int j = 0; j < 9; j++) {
-			cin >> ary[i][j];
-			int temp = ret;
-			ret = max(ret, ary[i][j]);
-			if(ret != temp){
-				ii = i + 1;
-				jj = j + 1;
-			}
-		}
-	}
+    while(true){
+        cin >> n; if(n == 0)break; 
+        cout << go(n, 0) << "\n";
+    }
 
-	cout << ret << '\n' << ii << ' ' << jj << '\n';
+
 	return 0;
 }
+
+
+
+
+
+
+
