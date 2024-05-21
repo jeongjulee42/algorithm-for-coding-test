@@ -1,20 +1,18 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-int n, m;
-vector<int> v;
+int ary[5], sum;
 
 int main(){
 	ios_base::sync_with_stdio(0); cin.tie(NULL); cout.tie(NULL);
 	
-	cin >> n >> m;
-	for(int i = 0; i < n; i++){
-		int temp = 0;
-		cin >> temp;
-		v.push_back(temp);
+	for(int i = 0; i < 5; i++) {
+		cin >> ary[i];
+		sum += ary[i];
 	}
-	sort(v.begin(), v.end(), greater<int>());
-	cout << v[m - 1] << '\n';	
+	sort(ary, ary + 5);
+	cout << sum / 5 << '\n' << ary[2] << '\n';
+	
 	return 0;
 }
 
