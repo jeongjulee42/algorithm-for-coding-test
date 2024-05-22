@@ -1,17 +1,19 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-int ary[5], sum;
+map<int, int> mp;
+int n;
 
 int main(){
 	ios_base::sync_with_stdio(0); cin.tie(NULL); cout.tie(NULL);
 	
-	for(int i = 0; i < 5; i++) {
-		cin >> ary[i];
-		sum += ary[i];
+	cin >> n;
+	for(int i = 0; i < n; i++){
+		int temp = 0;
+		cin >> temp;
+		mp.insert({temp, 1});
 	}
-	sort(ary, ary + 5);
-	cout << sum / 5 << '\n' << ary[2] << '\n';
+	for(auto a : mp) cout << a.first << '\n';
 	
 	return 0;
 }
