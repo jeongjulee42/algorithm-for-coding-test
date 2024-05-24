@@ -12,26 +12,17 @@ int main(){
 	for(int i = 0; i < n; i++){
 		int temp = 0;
 		cin >> temp;
-		if(temp == 1){
-			int num = 0;
-			cin >> num;
-			stk.push(num);
-		}
-		else if(temp == 2){
-			if(stk.size()){
-				cout << stk.top() << '\n';
-				stk.pop();
-			}else cout << -1 << '\n';
-		} else if(temp == 3) cout << stk.size() << '\n';
-		else if(temp == 4){
-			if(stk.size()) cout << 0 << '\n';
-			else cout << 1 << '\n';
-		}else{
-			if(stk.size()) cout << stk.top() << '\n';
-			else cout << -1 << '\n';
+		if(temp == 0) stk.pop();
+		else{
+			stk.push(temp);
 		}
 	}
-	
+	int ret = 0;
+	while(stk.size()){
+		ret += stk.top();
+		stk.pop();
+	}
+	cout << ret << '\n';
 	
 	return 0;
 }
