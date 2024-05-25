@@ -1,29 +1,20 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-stack<int> stk;
+queue<int> q;
 int n;
-
 
 int main(){
 	ios_base::sync_with_stdio(0); cin.tie(NULL); cout.tie(NULL);
 	
 	cin >> n;
-	for(int i = 0; i < n; i++){
-		int temp = 0;
-		cin >> temp;
-		if(temp == 0) stk.pop();
-		else{
-			stk.push(temp);
-		}
+	for(int i = 1; i <= n; i++) q.push(i);
+	while(q.size() != 1){
+		q.pop();
+		q.push(q.front());
+		q.pop();
 	}
-	int ret = 0;
-	while(stk.size()){
-		ret += stk.top();
-		stk.pop();
-	}
-	cout << ret << '\n';
-	
+	cout << q.front() << '\n';
 	return 0;
 }
 
