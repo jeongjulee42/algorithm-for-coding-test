@@ -1,24 +1,40 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-priority_queue<int, vector<int>, greater<int>> pq;
-int n, temp;
+queue<int> q;
+int n;
+
 
 int main(){
 	ios_base::sync_with_stdio(0); cin.tie(NULL); cout.tie(NULL);
 	
 	cin >> n;
 	for(int i = 0; i < n; i++){
-		cin >> temp;
-		if(temp == 0){
-			if(pq.size() == 0) cout << 0 << '\n';
-			else {
-				cout << pq.top() << '\n';
-				pq.pop();
+		string str = "";
+		cin >> str;
+		if(str == "push"){
+			int temp = 0;
+			cin >> temp;
+			q.push(temp);
+		} else if(str == "pop"){
+			if(!q.size()){
+				cout << -1 << '\n';
 			}
-		}
-		else{
-			pq.push(temp);
+			else {
+				cout << q.front() << '\n';
+				q.pop();
+			}
+		} else if(str == "size"){
+			cout << q.size() << '\n';
+		} else if(str == "empty"){
+			if(!q.size()) cout << 1 << '\n';
+			else cout << 0 << '\n';
+		} else if(str == "front"){
+			if(!q.size()) cout << -1 << '\n';
+			else cout << q.front() << '\n';
+		} else if(str == "back"){
+			if(!q.size()) cout << -1 << '\n';
+			else cout << q.back() << '\n';
 		}
 	}
 	
