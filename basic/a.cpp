@@ -1,13 +1,13 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-int n, m;
+int n;
 
 int main(){
 	ios_base::sync_with_stdio(0); cin.tie(NULL); cout.tie(NULL);
 	
-	cin >> n >> m;
-	cout << n * m << '\n';
+	cin >> n;
+	cout << (n - 1) * n << '\n';
 	
 	return 0;
 }
