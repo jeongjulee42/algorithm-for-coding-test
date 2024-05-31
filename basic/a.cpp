@@ -7,7 +7,7 @@ int main(){
 	ios_base::sync_with_stdio(0); cin.tie(NULL); cout.tie(NULL);
 	
 	cin >> n;
-	cout << (n - 1) * n << '\n';
+	cout << pow(2, n) << '\n';
 	
 	return 0;
 }
