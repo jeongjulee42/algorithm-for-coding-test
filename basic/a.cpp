@@ -1,16 +1,14 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-int n, ret = 1;
+string n;
 
 int main(){
 	ios_base::sync_with_stdio(0); cin.tie(NULL); cout.tie(NULL);
 	
 	cin >> n;
-	for(int i = n; i >= 2; i--){
-		ret *= i;
-	}
-	cout << ret << '\n';
+	sort(n.begin(), n.end(), greater<int>());
+	cout << n << '\n';
 	return 0;
 }
 
