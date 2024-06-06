@@ -1,23 +1,22 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-int x, y, w, h;
-int ary[1004], bry[1004];
+long long x1 = 100004, x2 = -100004, y = 100004, y2 = -100004;
+int n;
+long long a, b;
 
 int main(){
 	ios_base::sync_with_stdio(0); cin.tie(NULL); cout.tie(NULL);
 	
-	for(int i = 0; i < 3; i++){
-		cin >> x >> y;
-		ary[x]++;
-		bry[y]++;
+	cin >> n;
+	for(int i = 0; i < n; i++){
+		cin >> a >> b;
+		x1 = min(x1, a);
+		x2 = max(x2, a);
+		y = min(y, b);
+		y2 = max(y2, b);
 	}
-	for(int i = 0; i < 1001; i++){
-		if(ary[i] == 1) w = i;
-		if(bry[i] == 1) h = i;
-	}
-	cout << w << ' ' << h << '\n';
-	
+	cout << (x2 - x1) * (y2 - y) << '\n';
 	return 0;
 }
 
