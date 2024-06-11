@@ -1,19 +1,21 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-int ary[3];
-int a, b, c;
+string str;
+int n, ret;
 
 int main(){
 	ios_base::sync_with_stdio(0); cin.tie(NULL); cout.tie(NULL);
 	
-	cin >> ary[0] >> ary[1] >> ary[2];
-	sort(ary, ary + 3);
-	a = ary[0]; b = ary[1]; c = ary[2];
-	if(a + b <= c){
-		c = a + b - 1;
+	cin >> str >> n;
+	for(int i = 0; i < str.size(); i++){
+		int temp = 0;
+		int num = str.size() - i - 1;
+		if(str[num] > '9') temp = str[num] - 'A' + 10;
+		else temp = str[num] - '0';
+		ret += ((int)pow(n, i) * temp);
 	}
-	cout << a + b + c << '\n';
+	cout << ret << '\n';
 	return 0;
 }
 
