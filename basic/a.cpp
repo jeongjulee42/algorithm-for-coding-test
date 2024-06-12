@@ -1,21 +1,28 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-string str;
-int n, ret;
+char ary[36];
+int num, n;
+string ret;
 
 int main(){
 	ios_base::sync_with_stdio(0); cin.tie(NULL); cout.tie(NULL);
 	
-	cin >> str >> n;
-	for(int i = 0; i < str.size(); i++){
-		int temp = 0;
-		int num = str.size() - i - 1;
-		if(str[num] > '9') temp = str[num] - 'A' + 10;
-		else temp = str[num] - '0';
-		ret += ((int)pow(n, i) * temp);
+	for(int i = 0; i < 10; i++){
+		ary[i] = i + '0';
 	}
+	for(int i = 10; i < 36; i++){
+		ary[i] = (i - 10) + 'A';
+	}
+	cin >> num >> n;
+	while(num >= n){
+		ret += ary[num % n];
+		num = num / n;
+	}
+	ret += ary[num];
+	reverse(ret.begin(), ret.end());
 	cout << ret << '\n';
+
 	return 0;
 }
 
