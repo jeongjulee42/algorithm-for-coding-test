@@ -1,29 +1,32 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-int num;
-string str[20004];
+struct Judge{
+	int age, num;
+	string name;
+};
+int n, a;
+string str;
+Judge ary[100004];
 
-bool cmp(string a, string b){
-	if(a.size() < b.size()) return true;
-	else if(a.size() > b.size()) return false;
-	else return a < b;
-}
+bool cmp(Judge a, Judge b){
+	if(a.age < b.age) return true;
+	else if(a.age < b.age) return false;
+	else{
+		return a.num < b.num;
+	}
+} 
 
 int main(){
 	ios_base::sync_with_stdio(0); cin.tie(NULL); cout.tie(NULL);
 
-	cin >> num;
-	for(int i = 0; i < num; i++){
-		cin >> str[i];
+	cin >> n;
+	for(int i = 0; i < n; i++){
+		cin >> a >> str;
+		ary[i] = {a, i, str};
 	}
-	sort(str, str + num, cmp);
-	cout << str[0] << '\n';
-
-	for(int i = 1; i < num; i++) {
-		if(str[i - 1] == str[i]) continue;
-		cout << str[i] << '\n';
-	}
+	sort(ary, ary + n, cmp);
+	for(int i = 0; i < n; i++) cout << ary[i].age << ' ' << ary[i].name << '\n';
 
 	return 0;
 }
