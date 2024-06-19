@@ -2,40 +2,32 @@
 using namespace std;
 typedef long long ll;
 
-int V, E, K, u, v, w;
-vector<pair<int, int>> adj[20004];
-int dist[20001];
+int n, m, a, b, c, dist[104][104];
 const int INF = 987654321;
-priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> pq;
 
 int main(){
 	ios_base::sync_with_stdio(0); cin.tie(NULL); cout.tie(NULL);
 
-	cin >> V >> E >> K;
-	fill(dist, dist + 20001, INF);
-	for(int i = 0; i < E; i++){
-		cin >> u >> v >> w;
-		adj[u].push_back({w, v});
+	cin >> n >> m;
+	fill(&dist[0][0], &dist[0][0] + 104 * 104, INF);
+	for(int i = 0; i < m; i++){
+		cin >> a >> b >> c;
+		a--; b--;
+		dist[a][b] = dist[a][b] ? min(dist[a][b], c) : c;
 	}
-	dist[K] = 0;
-	pq.push({0, K});
-	while(pq.size()){
-		int here = pq.top().second;
-		int here_dist = pq.top().first;
-		pq.pop();
-		if(dist[here] != here_dist) continue;
-		for(auto there : adj[here]){
-			int _dist = there.first;
-			int _there = there.second;
-			if(dist[_there] > dist[here] + _dist){
-				dist[_there] = dist[here] + _dist;
-				pq.push({dist[_there], _there});
+	for(int k = 0; k < n; k++){
+		for(int i = 0; i < n; i++){
+			for(int j = 0; j < n; j++){
+				dist[i][j] = min(dist[i][j], dist[i][k] + dist[k][j]);
 			}
 		}
 	}
-	for(int i = 1; i <= V; i++){
-		if(dist[i] == INF) cout << "INF" << '\n';
-		else cout << dist[i] << '\n';
+	for(int i = 0; i < n; i++){
+		for(int j = 0; j < n; j++){
+			if(i == j) cout << "0" << ' ';
+			else cout << (dist[i][j] == INF) ? 0 : dist[i][j] << ' ';
+		}
+		cout << '\n';
 	}
 
 	return 0;
