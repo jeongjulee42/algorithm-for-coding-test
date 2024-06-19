@@ -2,35 +2,35 @@
 using namespace std;
 typedef long long ll;
 
-int n, m, a, b, c, dist[104][104];
-const int INF = 987654321;
+long long n, m, a, b, c, dist[1004], INF = 987654321;
 
 int main(){
 	ios_base::sync_with_stdio(0); cin.tie(NULL); cout.tie(NULL);
 
 	cin >> n >> m;
-	fill(&dist[0][0], &dist[0][0] + 104 * 104, INF);
+	fill(dist, dist + 1004, INF);
+	vector<pair<int, int>> adj[1004];
 	for(int i = 0; i < m; i++){
 		cin >> a >> b >> c;
-		a--; b--;
-		dist[a][b] = dist[a][b] ? min(dist[a][b], c) : c;
+		adj[a - 1].push_back({b - 1, c});
 	}
-	for(int k = 0; k < n; k++){
-		for(int i = 0; i < n; i++){
-			for(int j = 0; j < n; j++){
-				dist[i][j] = min(dist[i][j], dist[i][k] + dist[k][j]);
-			}
-		}
-	}
+	dist[0] = 0;
+	queue<int> q;
 	for(int i = 0; i < n; i++){
-		for(int j = 0; j < n; j++){
-			if(i == j) cout << "0" << ' ';
-			else {
-				int temp = (dist[i][j] == INF) ? 0 : dist[i][j];
-				cout << temp << ' ';
+		for(int here = 0; here < n; here++){
+			for(auto there : adj[here]){
+				int d = there.second;
+				int to = there.first;
+				if(dist[here] != INF && dist[here] + d < dist[to]){
+					if(i == n - 1)q.push(to);
+					dist[to] = dist[here] + d;
+				}
 			}
 		}
-		cout << '\n';
+	}
+	if(q.size()) cout << -1 << '\n';
+	else{
+		for(int i = 1; i < n; i++) cout << (dist[i] == INF ? -1 : dist[i]) << '\n';
 	}
 
 	return 0;
