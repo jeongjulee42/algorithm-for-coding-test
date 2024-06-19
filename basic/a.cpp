@@ -2,44 +2,50 @@
 using namespace std;
 typedef long long ll;
 
-int n, m, k, a, b, c;
+int t, n, m;
+int ary[100004];
+int tree[200004];
 
-ll sum(vector<ll> tree, int i){
-	ll ans = 0;
-	while(i > 0){
-		ans += tree[i];
-		i -= (i & -i);
-	}
-	return ans;
-}
-
-void update(vector<ll> &tree, ll diff, int i){
-	while(i < tree.size()){
-		tree[i] += diff;
+void update(int i, int value){
+	while(i <= 200004){
+		tree[i] += value;
 		i += (i & -i);
 	}
 }
 
+int sum(int i){
+	int ret = 0;
+	while(i > 0){
+		ret += tree[i];
+		i -= (i & -i);
+	}
+	return ret;
+}
+
+
 int main(){
 	ios_base::sync_with_stdio(0); cin.tie(NULL); cout.tie(NULL);
 
-	cin >> n >> m >> k;
-	vector<ll> tree(n + 1);
-	vector<ll> ary(n + 1);
-	for(int i = 1; i <= n; i++){
-		cin >> ary[i];
-		update(tree, ary[i], i);
-	}
-	m += k;
-	while(m--){
-		cin >> a >> b >> c;
-		if(a == 1){
-			ll diff = c - ary[b];
-			ary[b] = c;
-			update(tree, diff, b);
-		} else{
-			cout << sum(tree, c) - sum(tree, b - 1) << '\n';
+	cin >> t;
+	while(t--){
+		memset(ary, 0, sizeof(ary));
+		memset(tree, 0, sizeof(tree));
+		cin >> n >> m;
+		int idx = 100001;
+		for(int i = 1; i <= n; i++){
+			ary[i] = i + idx;
+			update(i + idx, 1);
 		}
+		for(int i = 0; i < m; i++){
+			int temp = 0;
+			cin >> temp;
+			int _idx = ary[temp];
+			cout << sum(_idx) - 1 << ' ';
+			update(_idx, -1);
+			update(--idx, 1);
+			ary[temp] = idx;
+		}
+		cout << '\n';
 	}
 
 	return 0;
