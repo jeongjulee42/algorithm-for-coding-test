@@ -2,25 +2,20 @@
 using namespace std;
 typedef long long ll;
 
-int a, b, c, d, e, f;
-vector<pair<int, int>> v;
+int n, k;
+int u = 1, d = 1;
 
 int main(){
 	ios_base::sync_with_stdio(0); cin.tie(NULL); cout.tie(NULL);
 
-	cin >> a >> b >> c >> d >> e >> f;
-	for(int i = -999; i < 1000; i++){
-		for(int j = -999; j < 1000; j++){
-			if(a * i + b * j == c){
-				v.push_back({i, j});
-			}
-		}
+	cin >> n >> k;
+	for(int i = n - k + 1; i <= n; i++){
+		u *= i;
 	}
-	for(auto t : v){
-		if(d * t.first + e * t.second == f){
-			cout << t.first << ' ' << t.second << '\n';
-		}
+	for(int i = 1; i <= k; i++){
+		d *= i;
 	}
+	cout << u / d << '\n';
 
 	return 0;
 }
