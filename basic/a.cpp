@@ -2,27 +2,28 @@
 using namespace std;
 typedef long long ll;
 
-int n, k, temp, ret;
-int ary[10];
+int ary[] = {25, 10, 5, 1};
+int t, c;
+int ret[4];
 
 int main(){
 	ios_base::sync_with_stdio(0); cin.tie(NULL); cout.tie(NULL);
-	cin >> n >> k;
-	for(int i = 0; i < n; i++){
-		cin >> ary[i];
+
+	cin >> t;
+	for(int i = 0; i < t; i++){
+		fill(ret, ret + 4, 0);
+		cin >> c;
+		int j = 0;
+		while(j < 4){
+			ret[j] = c / ary[j];
+			c = c % ary[j];
+			j++;
+		}
+		for(int k = 0; k < 4; k++){
+			cout << ret[k] << ' ';
+		}
+		cout << '\n';
 	}
-	temp = n - 1;
-	for(int i = 0; i < n; i++){
-		if(ary[i] > k){
-			temp = i - 1;
-			break;
-		} else if(ary[i] == k) temp = i;
-	}
-	while(temp >= 0){
-		ret += (k / ary[temp]);
-		k %= ary[temp];
-		temp--;
-	}
-	cout << ret << '\n';
+
 	return 0;
 }
