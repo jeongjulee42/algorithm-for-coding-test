@@ -2,27 +2,36 @@
 using namespace std;
 typedef long long ll;
 
-int ary[] = {25, 10, 5, 1};
-int t, c;
-int ret[4];
+
+struct cmp{
+	bool operator()(int a, int b){
+		if(abs(a) > abs(b)) return true;
+		else if(abs(a) < abs(b)) return false;
+		else{
+			if(a > b) return true;
+			else return false;
+		}
+	}
+};
+priority_queue<int, vector<int>, cmp> pq;
+int n, x;
 
 int main(){
 	ios_base::sync_with_stdio(0); cin.tie(NULL); cout.tie(NULL);
 
-	cin >> t;
-	for(int i = 0; i < t; i++){
-		fill(ret, ret + 4, 0);
-		cin >> c;
-		int j = 0;
-		while(j < 4){
-			ret[j] = c / ary[j];
-			c = c % ary[j];
-			j++;
+	cin >> n;
+	for(int i = 0; i < n; i++){
+		cin >> x;
+		if(x == 0){
+			if(pq.size()){
+				cout << pq.top() << '\n';
+				pq.pop();
+			} else{
+				cout << 0 << '\n';
+			}
+		}else{
+			pq.push(x);
 		}
-		for(int k = 0; k < 4; k++){
-			cout << ret[k] << ' ';
-		}
-		cout << '\n';
 	}
 
 	return 0;
