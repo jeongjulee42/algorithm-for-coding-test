@@ -2,22 +2,18 @@
 using namespace std;
 typedef long long ll;
 
-string s;
-set<string> st;
+int n, m;
 
 int main(){
 	ios_base::sync_with_stdio(0); cin.tie(NULL); cout.tie(NULL);
 
-	cin >> s;
-	for(int i = 0; i < s.size(); i++){
-		string temp = "";
-		for(int j = i; j < s.size(); j++){
-			temp += s[j];
-			cout << temp << '\n';
-			st.insert(temp);
-		}
+	while(1){
+		cin >> n >> m;
+		if(n == 0 && m == 0) break;
+		if(m % n == 0) cout << "factor" << '\n';
+		else if(n % m == 0) cout << "multiple" << '\n';
+		else cout << "neither" << '\n';
 	}
-	cout << st.size() << '\n';
 
 	return 0;
 }
