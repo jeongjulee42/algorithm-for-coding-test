@@ -2,26 +2,34 @@
 using namespace std;
 typedef long long ll;
 
-bool ary[1001];
-int n, temp, ret;
+
+int n, m, minVal = 987654321, ret;
+bool che[10004];
+
+void era(){
+	for(int i = 2; i <= 10001; i++){
+		if(che[i]) continue;
+		for(int j = i * 2; j <= 10001; j += i){
+			che[j] = 1;
+		}
+	}
+}
+
 
 int main(){
 	ios_base::sync_with_stdio(0); cin.tie(NULL); cout.tie(NULL);
 
-	cin >> n;
-	ary[1] = true;
-	for(int i = 3; i <= 1000; i++){
-		for(int j = 2; j < i; j++){
-			if(i % j == 0){
-				ary[i] = true;
-				break;
-			}
+	cin >> m >> n;
+	era();
+	che[1] = 1;
+	for(int i = m; i <= n; i++){
+		if(che[i] == 0){
+			minVal = min(minVal, i);
+			ret += i;
 		}
 	}
-	for(int i = 0; i < n; i++){
-		cin >> temp;
-		if(!ary[temp]) ret++;
-	}
-	cout << ret << '\n';
+	if(ret == 0) cout << -1 << '\n';
+	else cout << ret << '\n' << minVal << '\n';
+	
 	return 0;
 }
