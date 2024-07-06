@@ -2,31 +2,18 @@
 using namespace std;
 typedef long long ll;
 
-vector<int> ret;
-int n, sum;
+int n;
 
 int main(){
 	ios_base::sync_with_stdio(0); cin.tie(NULL); cout.tie(NULL);
 
-	while(1){
-		cin >> n;
-		if(n == -1) break;
-		ret.clear();
-		sum = 0;
-		for(int i = 1; i < n; i++){
-			if(n % i == 0) ret.push_back(i);
-		}
-		for(int r : ret) sum += r;
-		if(sum == n){
-			cout << n << " = ";
-			for(int i = 0; i < ret.size() - 1; i++){
-				cout << ret[i] << " + ";
-			}
-			cout << ret[ret.size() - 1] << '\n';
-
-		} else {
-			cout << n << " is NOT perfect." << '\n';
-		}
+	cin >> n;
+	int temp = n * 2 - 1;
+	for(int i = 1; i <= temp; i++){
+		int j = abs(n - i);
+		for(int k = 1; k <= j; k++) cout << ' ';
+		for(int k = 1; k <= (n - j) * 2 - 1; k++) cout << '*';
+		cout << '\n';
 	}
 
 	return 0;
