@@ -2,23 +2,20 @@
 using namespace std;
 typedef long long ll;
 
-map<int, int> mp;
-int num, temp;
+int n, ret = -1;
 
 int main(){
 	ios_base::sync_with_stdio(0); cin.tie(NULL); cout.tie(NULL);
 
-	cin >> num;
-	for(int i = 0; i < num; i++){
-		cin >> temp;
-		mp[temp]++;
-	}
-	for(auto m : mp){
-		if(!m.second) continue;
-		for(int i = 0; i < m.second; i++){
-			cout << m.first << '\n';
+	cin >> n;
+	int temp = n / 5;
+	for(int i = temp; i >= 0; i--){
+		if((n - (i * 5)) % 3 == 0){
+			ret = i + ((n - (i * 5)) / 3);
+			break;
 		}
 	}
+	cout << ret << '\n';
 
 	return 0;
 }
