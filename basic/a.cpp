@@ -2,28 +2,18 @@
 using namespace std;
 typedef long long ll;
 
-string name, grade_s, score_s;
-int grade, score;
-int sum, multiSum;
-int ret;
+int n, tot, start = 2;
+//초기 4-0 4개 | 1번 3 5-4 9개 | 2번 5 16-9 25개 | 3번 9 25- 81개 | 
 
 int main(){
 	ios_base::sync_with_stdio(0); cin.tie(NULL); cout.tie(NULL);
 
-	for(int i = 0; i < 20; i++){
-		cin >> name >> score_s >> grade_s;
-		if(grade_s == "P") continue;
-		score = (score_s[0] - '0') * 10 + (score_s[2] - '0');
-		sum += score;
-		if(grade_s[0] == 'A') grade = 40;
-		else if(grade_s[0] == 'B') grade = 30;
-		else if(grade_s[0] == 'C') grade = 20;
-		else if(grade_s[0] == 'D') grade = 10;
-		else grade = 0;
-		if(grade_s.size() > 1 && grade_s[1] == '+') grade += 5;
-		multiSum += grade * score;
+	cin >> n;
+	for(int i = 0; i < n; i++){
+		start += start - 1;
+		tot = start * start;
 	}
-	cout << ((double)multiSum / sum) / 10 << '\n';
+	cout << tot << '\n';
 
 	return 0;
 }
