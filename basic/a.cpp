@@ -2,19 +2,32 @@
 using namespace std;
 typedef long long ll;
 
-int n, ret = 1, start = 1, i = 1;
+int n, k;
+queue<int> q;
+queue<int> ret;
 
-//6 12 18 24 30...
 int main(){
 	ios_base::sync_with_stdio(0); cin.tie(NULL); cout.tie(NULL);
 
-	cin >> n;
-	while(n > start){
-		ret ++;
-		start += i * 6;
-		i++;
+	cin >> n >> k;
+	for(int i = 1; i <= n; i++) q.push(i);
+	while(q.size()){
+		for(int i = 1; i < k; i++){
+			int temp = q.front();
+			q.pop();
+			q.push(temp);
+		}
+		int temp2 = q.front();
+		q.pop();
+		ret.push(temp2);
 	}
-	cout << ret << '\n';
+	cout << '<' << ret.front();
+	ret.pop();
+	while(ret.size()){
+		cout << ", " << ret.front();
+		ret.pop();
+	}
+	cout << '>' << '\n';
 
 	return 0;
 }
