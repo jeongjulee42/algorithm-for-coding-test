@@ -2,19 +2,22 @@
 using namespace std;
 typedef long long ll;
 
-int n;
-int go(int n){
-	if(n <= 2) return 1;
-	return go(n - 1) + go(n - 2);
+int gcd(int a, int b){
+	if(a == 0) return b;
+	return gcd(b % a, a);
 }
+int lcm(int a, int b){
+	return (a * b) / gcd(a, b);
+}
+int a, b, n;
 
 int main(){
 	ios_base::sync_with_stdio(0); cin.tie(NULL); cout.tie(NULL);
 
 	cin >> n;
-	if(n == 0 || n == 1) cout << n << '\n';
-	else{
-		cout << go(n) << '\n';
+	for(int i = 0; i < n; i++){
+		cin >> a >> b;
+		cout << lcm(min(a, b), max(a, b)) << '\n';
 	}
 
 	return 0;
