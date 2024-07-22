@@ -2,13 +2,15 @@
 using namespace std;
 typedef long long ll;
 
-ll n;
+int n;
+int ary[51];
 
 int main(){
 	ios_base::sync_with_stdio(0); cin.tie(NULL); cout.tie(NULL);
 	cin >> n;
-	cout << (n * (n - 1) * (n - 2)) / 6 << '\n' << 3 << '\n';
-
+	for(int i = 0; i < n; i++) cin >> ary[i];
+	sort(ary, ary + n);
+	cout << ary[0] * ary[n - 1] << '\n';
 
 	return 0;
 }
