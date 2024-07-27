@@ -2,20 +2,26 @@
 using namespace std;
 typedef long long ll;
 
-ll n, m;
-ll gcd(ll a, ll b){
-	if(a == 0) return b;
-	return gcd(b % a, a);
-}
-ll lcm(ll a, ll b){
-	return (a * b) / gcd(a, b);
-}
+map<string, int> mp;
+int n, ret;
+string name;
 
 int main(){
 	ios_base::sync_with_stdio(0); cin.tie(NULL); cout.tie(NULL);
 
-	cin >> n >> m;
-	cout << lcm(n, m) << '\n';
-
+	cin >> n;
+	for(int i = 0; i < n; i++){
+		cin >> name;
+		if(name == "ENTER"){
+			ret += mp.size();
+			mp.clear();
+		}else{
+			if(mp.find(name) == mp.end()){
+				mp.insert({name, 1});
+			}
+		}
+	}
+	ret += mp.size();
+	cout << ret << '\n';
 	return 0;
 }
