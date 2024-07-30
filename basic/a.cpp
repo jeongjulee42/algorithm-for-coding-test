@@ -2,20 +2,21 @@
 using namespace std;
 typedef long long ll;
 
-int ary[100001], n, m, temp, a, b;
+int ary[1001], n, ret, temp;
 
 int main(){
 	ios_base::sync_with_stdio(0); cin.tie(NULL); cout.tie(NULL);
 
-	cin >> n >> m;
-	for(int i = 1; i <= n; i++){
-		cin >> temp;
-		ary[i] = ary[i - 1] + temp;
+	cin >> n;
+	for(int i = 0; i < n; i++) cin >> ary[i];
+	sort(ary, ary + n);
+	for(int i = 1; i < n; i++) {
+		ary[i] = ary[i - 1] + ary[i]; 
 	}
-	for(int i = 0; i < m; i++){
-		cin >> a >> b;
-		cout << ary[b] - ary[a - 1] << '\n';
+	for(int i = 0; i < n; i++){
+		ret += ary[i];
 	}
+	cout << ret << '\n';
 
 	return 0;
 }
