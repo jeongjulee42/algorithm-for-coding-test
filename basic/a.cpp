@@ -2,21 +2,35 @@
 using namespace std;
 typedef long long ll;
 
-int ary[1001], n, ret, temp;
+string str;
+int n, m;
+vector<pair<string, int>> v;
+map<string, int> mp;
+bool cmp(pair<string, int> a, pair<string, int> b){
+	if(a.second > b.second){
+		return true;
+	}else if(a.second < b.second){
+		return false;
+	}else{
+		if(a.first.size() > b.first.size()) return true;
+		else if(a.first.size() < b.first.size()) return false;
+		else{
+			return a.first < b.first;
+		}
+	}
+}
 
 int main(){
 	ios_base::sync_with_stdio(0); cin.tie(NULL); cout.tie(NULL);
 
-	cin >> n;
-	for(int i = 0; i < n; i++) cin >> ary[i];
-	sort(ary, ary + n);
-	for(int i = 1; i < n; i++) {
-		ary[i] = ary[i - 1] + ary[i]; 
-	}
+	cin >> n >> m;
 	for(int i = 0; i < n; i++){
-		ret += ary[i];
+		cin >> str;
+		if(str.size() < m) continue;
+		mp[str] ++;
 	}
-	cout << ret << '\n';
-
+	for(auto a : mp) v.push_back({a.first, a.second});
+	sort(v.begin(), v.end(), cmp);
+	for(auto a : v) cout << a.first << '\n';
 	return 0;
 }
