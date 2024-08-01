@@ -2,35 +2,27 @@
 using namespace std;
 typedef long long ll;
 
-string str;
-int n, m;
-vector<pair<string, int>> v;
-map<string, int> mp;
-bool cmp(pair<string, int> a, pair<string, int> b){
-	if(a.second > b.second){
-		return true;
-	}else if(a.second < b.second){
-		return false;
-	}else{
-		if(a.first.size() > b.first.size()) return true;
-		else if(a.first.size() < b.first.size()) return false;
-		else{
-			return a.first < b.first;
+//소수는 false 소수아니면 true
+bool ary[1000001];
+void che(){
+	for(int i = 2; i < 1000001; i++){
+		if(ary[i]) continue;
+		for(int j = 2*i; j < 1000001; j = j + i){
+			ary[j] = true;
 		}
 	}
 }
+int a, b;
 
 int main(){
 	ios_base::sync_with_stdio(0); cin.tie(NULL); cout.tie(NULL);
 
-	cin >> n >> m;
-	for(int i = 0; i < n; i++){
-		cin >> str;
-		if(str.size() < m) continue;
-		mp[str] ++;
+	che();
+	ary[1] = true;
+	cin >> a >> b;
+	for(int i = a; i <= b; i++){
+		if(!ary[i]) cout << i << '\n';
 	}
-	for(auto a : mp) v.push_back({a.first, a.second});
-	sort(v.begin(), v.end(), cmp);
-	for(auto a : v) cout << a.first << '\n';
+
 	return 0;
 }
