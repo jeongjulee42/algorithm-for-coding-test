@@ -2,27 +2,32 @@
 using namespace std;
 typedef long long ll;
 
-//소수는 false 소수아니면 true
-bool ary[1000001];
-void che(){
-	for(int i = 2; i < 1000001; i++){
-		if(ary[i]) continue;
-		for(int j = 2*i; j < 1000001; j = j + i){
-			ary[j] = true;
-		}
+int n, m, ret, a, b;
+vector<int> ary[101];
+bool visited[101];
+
+void go(int k){
+	visited[k] = 1;
+	for(int i : ary[k]){
+		if(visited[i]) continue;
+		go(i);
 	}
 }
-int a, b;
 
 int main(){
 	ios_base::sync_with_stdio(0); cin.tie(NULL); cout.tie(NULL);
 
-	che();
-	ary[1] = true;
-	cin >> a >> b;
-	for(int i = a; i <= b; i++){
-		if(!ary[i]) cout << i << '\n';
+	cin >> n >> m;
+	for(int i = 0; i < m; i++){
+		cin >> a >> b;
+		ary[a].push_back(b);
+		ary[b].push_back(a);
 	}
+	go(1);
+	for(int i = 1; i <= n; i++){
+		if(visited[i]) ret++;
+	}
+	cout << ret - 1 << '\n';
 
 	return 0;
 }
