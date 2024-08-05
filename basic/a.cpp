@@ -1,50 +1,29 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-int dy[] = {-1, 0, 1, 0};
-int dx[] = {0, 1, 0, -1};
-int n;
-int ary[25][25];
-bool visited[25][25];
+int ary[1000001], num[1000001], n;
+stack<int> stk;
 vector<int> ret;
-
-int go(int y, int x){
-	visited[y][x] = 1;
-	int t = 0;
-	for(int i = 0; i < 4; i++){
-		int ny = dy[i] + y;
-		int nx = dx[i] + x;
-		if(ny < 0 || ny >= n || nx < 0 || nx >= n) continue;
-		if(visited[ny][nx]) continue;
-		if(!ary[ny][nx]) continue;
-		t += go(ny, nx);
-	}
-	return t + 1;
-}
-
 
 int main(){
 	ios_base::sync_with_stdio(0); cin.tie(NULL); cout.tie(NULL);
 
 	cin >> n;
 	for(int i = 0; i < n; i++){
-		string str = "";
-		cin >> str;
-		for(int j = 0; j < n; j++){
-			ary[i][j] = str[j] - '0';
-		}
+		cin >> ary[i];
+		num[ary[i]]++;
 	}
-	for(int i = 0; i < n; i++){
-		for(int j = 0; j < n; j++){
-			if(visited[i][j]) continue;
-			if(ary[i][j] == 0) continue;
-			int temp = go(i, j);
-			ret.push_back(temp);
+	for(int i = n - 1; i >= 0; i--){
+		int t = ary[i];
+		while(stk.size() && num[stk.top()] <= num[t]){
+			stk.pop();
 		}
+		if(stk.size() == 0) ret.push_back(-1);
+		else{
+			ret.push_back(stk.top());
+		}
+		stk.push(t);
 	}
-	sort(ret.begin(), ret.end());
-	cout << ret.size() << '\n';
-	for(int r : ret) cout << r << '\n';
-
+	for(int i = ret.size() - 1; i >= 0; i--) cout << ret[i] << ' ';
 	return 0;
 }
