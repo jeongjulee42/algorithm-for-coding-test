@@ -1,32 +1,34 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-int n;
+bool visited[100001];
+vector<int> adj[100001];
 int ret[100001];
-vector<int> ary[100001];
-int a, b;
+int n, m, r, a, b, num = 1;
 
-void go(int from){
-	for(int i = 0; i < ary[from].size(); i++){
-		if(ret[ary[from][i]] != 0) continue;
-		ret[ary[from][i]] = from;
-		go(ary[from][i]);
+void go(int here){
+	visited[here] = 1;
+	ret[here] = num;
+	sort(adj[here].begin(), adj[here].end());
+	for(int i = 0; i < adj[here].size(); i++){
+		int there = adj[here][i];
+		if(visited[there]) continue;
+		num++;
+		go(there);
 	}
 }
 
 int main(){
 	ios_base::sync_with_stdio(0); cin.tie(NULL); cout.tie(NULL);
 
-	cin >> n;
-	for(int i = 1; i < n; i++){
+	cin >> n >> m >> r;
+	for(int i = 0; i < m; i++) {
 		cin >> a >> b;
-		ary[a].push_back(b);
-		ary[b].push_back(a);
+		adj[a].push_back(b);
+		adj[b].push_back(a);
 	}
-	go(1);
-	for(int i = 2; i <= n; i++){
-		cout << ret[i] << '\n';
-	}
+	go(r);
+	for(int i = 1; i <= n; i++) cout << ret[i] << '\n';
 
 	return 0;
 }
