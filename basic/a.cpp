@@ -1,34 +1,32 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-bool visited[100001];
-vector<int> adj[100001];
-int ret[100001];
-int n, m, r, a, b, num = 1;
+int n, m;
+bool visited[9];
+vector<int> r;
 
-void go(int here){
-	visited[here] = 1;
-	ret[here] = num;
-	sort(adj[here].begin(), adj[here].end());
-	for(int i = 0; i < adj[here].size(); i++){
-		int there = adj[here][i];
-		if(visited[there]) continue;
-		num++;
-		go(there);
+void go(){
+	if(r.size() == m){
+		for(int i = 0; i < r.size(); i++ ) cout << r[i] << ' ';
+		cout << '\n';
+		return;
 	}
+	for(int i = 1; i <= n; i++){
+		if(visited[i]) continue;
+		r.push_back(i);
+		visited[i] = 1;
+		go();
+		r.pop_back();
+		visited[i] = 0;
+	}
+
 }
 
 int main(){
 	ios_base::sync_with_stdio(0); cin.tie(NULL); cout.tie(NULL);
 
-	cin >> n >> m >> r;
-	for(int i = 0; i < m; i++) {
-		cin >> a >> b;
-		adj[a].push_back(b);
-		adj[b].push_back(a);
-	}
-	go(r);
-	for(int i = 1; i <= n; i++) cout << ret[i] << '\n';
+	cin >> n >> m;
+	go();
 
 	return 0;
 }
