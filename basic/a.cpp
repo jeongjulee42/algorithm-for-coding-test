@@ -14,12 +14,12 @@ void go(){
 	for(int i = 1; i <= n; i++){
 		if(visited[i]) continue;
 		r.push_back(i);
-		visited[i] = 1;
+		//visited[i] = 1;
 		go();
 		r.pop_back();
-		visited[i] = 0;
+		//visited[i] = 0;
 	}
-
+	
 }
 
 int main(){
