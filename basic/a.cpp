@@ -1,31 +1,33 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-int n, start, g, temp;
-
-int gcd(int a, int b){
-	if(a == 0) return b;
-	return gcd(b % a, a);
-}
+int n, m, k;
+int a[100][100];
+int b[100][100];
+int ret[100][100];
 
 int main(){
 	ios_base::sync_with_stdio(0); cin.tie(NULL); cout.tie(NULL);
 
-	cin >> n;
+	cin >> n >> m;
 	for(int i = 0; i < n; i++){
-		cin >> temp;
-		if(i == 0){ 
-			start = temp;
-		}else if(i == 0){
-			g = temp - start;
-		}
-		else{
-			g = gcd(g, temp - start);
+		for(int j = 0; j < m; j++) cin >> a[i][j];
+	}
+	cin >> m >> k;
+	for(int i = 0; i < m; i++){
+		for(int j = 0; j < k; j++) cin >> b[i][j];
+	}
+	for(int i = 0; i < n; i++){
+		for(int j = 0; j < k; j++){
+			for(int l = 0; l < m; l++){
+				ret[i][j] += a[i][l] * b[l][j];
+			}
 		}
 	}
-
-	cout << (temp - start) / g - n + 1 << '\n';
-	
-
+	for(int i = 0; i < n; i++){
+		for(int j = 0; j < k; j++){
+			cout << ret[i][j] << ' ';
+		}cout << '\n';
+	}
 	return 0;
 }
