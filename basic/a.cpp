@@ -1,33 +1,38 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-int n, m, k;
-int a[100][100];
-int b[100][100];
-int ret[100][100];
+vector<int> adj[100001];
+int visited[100001];
+int n, a, b, m, r;
+int ret[100001];
+int num = 1;
+
+void dfs(int here){
+	visited[here] = 1;
+	ret[here] = num;
+	for(int i = adj[here].size() - 1; i >= 0; i--){
+		int there = adj[here][i];
+		if(visited[there]) continue;
+		num++;
+		dfs(there);
+	}
+	return;
+}
 
 int main(){
 	ios_base::sync_with_stdio(0); cin.tie(NULL); cout.tie(NULL);
 
-	cin >> n >> m;
-	for(int i = 0; i < n; i++){
-		for(int j = 0; j < m; j++) cin >> a[i][j];
-	}
-	cin >> m >> k;
+	cin >> n >> m >> r;
 	for(int i = 0; i < m; i++){
-		for(int j = 0; j < k; j++) cin >> b[i][j];
+		cin >> a >> b;
+		adj[a].push_back(b);
+		adj[b].push_back(a);
 	}
-	for(int i = 0; i < n; i++){
-		for(int j = 0; j < k; j++){
-			for(int l = 0; l < m; l++){
-				ret[i][j] += a[i][l] * b[l][j];
-			}
-		}
+	for(int i = 1; i <= n; i++){
+		sort(adj[i].begin(), adj[i].end());
 	}
-	for(int i = 0; i < n; i++){
-		for(int j = 0; j < k; j++){
-			cout << ret[i][j] << ' ';
-		}cout << '\n';
-	}
+	dfs(r);
+	for(int i = 1; i <= n; i++) cout << ret[i] << '\n';
+
 	return 0;
 }
