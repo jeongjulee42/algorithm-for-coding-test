@@ -26,12 +26,13 @@ int main(){
 	while(q.size()){
 		int there = q.front();
 		q.pop();
-		for(int i : v[there]){
-			if(!visited[i]) {
+		for(int i = v[there].size() - 1; i >= 0; i--){
+			int temp = v[there][i];
+			if(!visited[temp]) {
 				num++;
-				ret[i] = num;
-				visited[i] = 1;
-				q.push(i);
+				ret[temp] = num;
+				visited[temp] = 1;
+				q.push(temp);
 			}
 		}
 	}
