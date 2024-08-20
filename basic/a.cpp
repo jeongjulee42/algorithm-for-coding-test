@@ -30,12 +30,6 @@ int main(){
 				visited[ny][nx] = visited[ty][tx] + 1;
 				q.push({ny, nx});
 			}
-			for(int i = 0; i < l; i++){
-				for(int j = 0; j < l; j++){
-					cout << visited[i][j] << ' ';
-				} cout << '\n';
-			}
-			cout << "----" << '\n';
 			if(visited[ey][ex]){ 
 				cout << visited[ey][ex] - 1 << '\n';
 				while(q.size()){
