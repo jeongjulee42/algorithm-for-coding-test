@@ -1,18 +1,20 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-int ary[41];
-int n;
+int a1, a0, c, n0;
 
 int main(){
 	ios_base::sync_with_stdio(0); cin.tie(NULL); cout.tie(NULL);
 
-	cin >> n;
-	ary[1] = 1; ary[2] = 1;
-	for(int i = 3; i <= 40; i++){
-		ary[i] = ary[i-1] + ary[i-2];
+	cin >> a1 >> a0 >> c >> n0;
+	for(int i = n0; i <= 100; i++){
+		if((c - a1) * i < a0){
+			cout << 0 << '\n';
+			exit(0);
+		}
 	}
-	cout << ary[n] << ' ' << n - 2;
+	cout << 1 << '\n';
+
 
 	return 0;
 }
