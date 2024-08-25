@@ -1,20 +1,31 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-int a1, a0, c, n0;
+const int MAX_VAL = 300000;
+bool che[MAX_VAL];
+int ary[MAX_VAL];
+int n, num;
 
 int main(){
 	ios_base::sync_with_stdio(0); cin.tie(NULL); cout.tie(NULL);
 
-	cin >> a1 >> a0 >> c >> n0;
-	for(int i = n0; i <= 100; i++){
-		if((c - a1) * i < a0){
-			cout << 0 << '\n';
-			exit(0);
+	for(int i = 2; i <= MAX_VAL; i++){
+		if(che[i]) continue;
+		for(int j = i * 2; j <= MAX_VAL; j = j + i){
+			che[j] = 1;
 		}
 	}
-	cout << 1 << '\n';
-
+	for(int i = 0; i <= MAX_VAL; i++){
+		if(!che[i]) num++;
+		ary[i] = num;
+	}
+	while(1){
+		cin >> n;
+		if(n == 0) break;
+		// cout << ary[n * 2] << '\n';
+		// cout << ary[n] << '\n';
+		cout << ary[n*2] - ary[n] << '\n';
+	}
 
 	return 0;
 }
