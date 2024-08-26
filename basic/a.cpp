@@ -1,31 +1,28 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-const int MAX_VAL = 300000;
-bool che[MAX_VAL];
-int ary[MAX_VAL];
-int n, num;
+int ary[504][504];
+int dp[504][504];
+int n, ret;
 
 int main(){
 	ios_base::sync_with_stdio(0); cin.tie(NULL); cout.tie(NULL);
 
-	for(int i = 2; i <= MAX_VAL; i++){
-		if(che[i]) continue;
-		for(int j = i * 2; j <= MAX_VAL; j = j + i){
-			che[j] = 1;
+	cin >> n;
+	for(int i = 1; i <= n; i++){
+		for(int j = 1; j <= i; j++){
+			cin >> ary[i][j];
 		}
 	}
-	for(int i = 0; i <= MAX_VAL; i++){
-		if(!che[i]) num++;
-		ary[i] = num;
+	dp[1][1] = ary[1][1];
+	for(int i = 2; i <= n; i++){
+		for(int j = 1; j <= i; j++){
+			dp[i][j] = ary[i][j] + max(dp[i-1][j], dp[i-1][j-1]);
+		}
 	}
-	while(1){
-		cin >> n;
-		if(n == 0) break;
-		// cout << ary[n * 2] << '\n';
-		// cout << ary[n] << '\n';
-		cout << ary[n*2] - ary[n] << '\n';
+	for(int i = 1; i <= n; i++){
+		ret = max(dp[n][i], ret);
 	}
-
+	cout << ret << '\n';
 	return 0;
 }
