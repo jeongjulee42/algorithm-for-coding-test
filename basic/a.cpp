@@ -1,31 +1,34 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-int n, stair[304];
-pair<int, int> ary[304][2];
+int dp[102][102][102];
+
+int w(int a, int b, int c){
+	if(a <= 0 || b <= 0 || c <= 0) return 1;
+	if(a > 20 || b > 20 || c > 20) return w(20, 20, 20);
+	if(a < b && b < c){
+		if(!dp[a][b][c-1]) dp[a][b][c-1] = w(a, b, c-1);
+		if(!dp[a][b-1][c-1]) dp[a][b-1][c-1] = w(a, b-1, c-1);
+		if(!dp[a][b-1][c]) dp[a][b-1][c] = w(a, b-1, c);
+		return dp[a][b][c-1] + dp[a][b-1][c-1] - dp[a][b-1][c];
+	}
+	if(!dp[a-1][b][c]) dp[a-1][b][c] = w(a-1, b, c);
+	if(!dp[a-1][b-1][c]) dp[a-1][b-1][c] = w(a-1, b-1, c);
+	if(!dp[a-1][b][c-1]) dp[a-1][b][c-1] = w(a-1, b, c-1);
+	if(!dp[a-1][b-1][c-1]) dp[a-1][b-1][c-1] = w(a-1, b-1, c-1);
+	return dp[a-1][b][c] + dp[a-1][b-1][c] + dp[a-1][b][c-1] - dp[a-1][b-1][c-1];
+}
 
 int main(){
 	ios_base::sync_with_stdio(0); cin.tie(NULL); cout.tie(NULL);
 
-	cin >> n;
-	for(int i = 1; i <= n; i++) cin >> stair[i];
-	ary[1][0].first = stair[1]; ary[1][0].second = 1;
-	ary[1][1].first = 0; ary[1][1].second = 0;
-	for(int i = 2; i <= n; i++){
-		if(ary[i-1][0].second == 2) {
-			ary[i][0].first = ary[i-1][1].first + stair[i];
-			ary[i][0].second = ary[i-1][1].second + 1;
-		}else if(ary[i-1][0].first > ary[i-1][1].first){
-			ary[i][0].first = ary[i-1][0].first + stair[i];
-			ary[i][0].second = ary[i-1][0].second + 1;
-		}else{
-			ary[i][0].first = ary[i-1][1].first + stair[i];
-			ary[i][0].second = ary[i-1][1].second + 1;
-		}
-		ary[i][1].first = max(ary[i-2][0].first, ary[i-2][1].first) + stair[i];
-		ary[i][1].second = 1;
+	
+	while(1){
+		int a = 0, b = 0, c = 0;
+		cin >> a >> b >> c;
+		if(a == -1 && b == -1 && c == -1) break;
+		cout << "w(" << a << ", " << b << ", " << c << ") = " << w(a, b, c) << '\n';
 	}
-	cout << max(ary[n][0].first, ary[n][1].first) << '\n';
 
 	return 0;
 }
