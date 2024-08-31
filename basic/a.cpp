@@ -1,26 +1,23 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-int dp[1000001];
 int n;
 
-void go(){
-	queue<int> q;
-	q.push(1);
-	while(q.size()){
-		int num = q.front();
-		q.pop();
-		if(num + 1 <= 1000000 && !dp[num + 1]){
-			dp[num + 1] = dp[num] + 1;
-			q.push(num + 1);
+void go(vector<vector<char>> &adj, int num, int y, int x){
+	if(num == 1) return;
+	int nextNum = num / 3;
+	int sy = y + nextNum;
+	int sx = x + nextNum;
+	int ey = sy + nextNum;
+	int ex = sx + nextNum;
+	for(int i = sy; i < ey; i++){
+		for(int j = sx; j < ex; j++){
+			adj[i][j] = ' ';
 		}
-		if(num * 2 <= 1000000 && !dp[num * 2]){
-			dp[num * 2] = dp[num] + 1;
-			q.push(num * 2);
-		}
-		if(num * 3 <= 1000000 && !dp[num * 3]){
-			dp[num * 3] = dp[num] + 1;
-			q.push(num * 3);
+	}
+	for(int i = y; i < y + num; i += nextNum){
+		for(int j = x; j < x + num; j += nextNum){
+			go(adj, nextNum, i, j);
 		}
 	}
 }
@@ -29,9 +26,15 @@ int main(){
 	ios_base::sync_with_stdio(0); cin.tie(NULL); cout.tie(NULL);
 
 	cin >> n;
-	go();
-	cout << dp[n] << '\n';
+	vector<vector<char>> adj(n, vector<char>(n, '*'));
+	
+	go(adj, n, 0, 0);
 
-
+	for(int i = 0; i < n; i++){
+		for(int j = 0; j < n; j++){
+			cout << adj[i][j];
+		}cout << '\n';
+	}
+	
 	return 0;
 }
