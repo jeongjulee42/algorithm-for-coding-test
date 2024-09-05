@@ -1,39 +1,28 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-int n;
-int ary[128][128];
-int white, blue;
+int x1, x2, x3, p1, p2, p3;
 
-void go(int y, int x, int num){
-	int temp = 0;
-	for(int i = y; i < y + num; i++){
-		for(int j = x; j < x + num; j++){
-			temp += ary[i][j];
-		}
-	}
-	if(temp == num * num){
-		blue++;
-	}else if(temp == 0){
-		white++;
-	}else{
-		for(int i = y; i < y + num; i += num / 2){
-			for(int j = x; j < x + num; j += num / 2){
-				go(i, j, num / 2);
-			}
-		}
-	}
+int ccw(int x1, int y1, int x2, int y2, int x3, int y3) {
+    int temp = x1*y2+x2*y3+x3*y1;
+    temp = temp - y1*x2-y2*x3-y3*x1;
+    if (temp > 0) {
+        return 1;
+    } else if (temp < 0) {
+        return -1;
+    } else {
+        return 0;
+    }
 }
 
 int main(){
 	ios_base::sync_with_stdio(0); cin.tie(NULL); cout.tie(NULL);
 
-	cin >> n;
-	for(int i = 0; i < n; i++){
-		for(int j = 0; j < n; j++) cin >> ary[i][j];
-	}
-	go(0, 0, n);
-	cout << white << '\n' << blue << '\n';
+	cin >> x1 >> p1 >> x2 >> p2 >> x3 >> p3;
+	int ret = ccw(x1, p1, x2, p2, x3, p3);
+	if(ret == 0) cout << 0;
+	else if(ret > 0) cout << 1;
+	else cout << -1;
 
 	return 0;
 }
