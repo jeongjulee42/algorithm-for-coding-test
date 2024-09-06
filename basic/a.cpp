@@ -1,28 +1,28 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-int x1, x2, x3, p1, p2, p3;
-
-int ccw(int x1, int y1, int x2, int y2, int x3, int y3) {
-    int temp = x1*y2+x2*y3+x3*y1;
-    temp = temp - y1*x2-y2*x3-y3*x1;
-    if (temp > 0) {
-        return 1;
-    } else if (temp < 0) {
-        return -1;
-    } else {
-        return 0;
-    }
-}
+string str;
+int ary[200004][26];
+int n, s, e;
+char c;
 
 int main(){
 	ios_base::sync_with_stdio(0); cin.tie(NULL); cout.tie(NULL);
 
-	cin >> x1 >> p1 >> x2 >> p2 >> x3 >> p3;
-	int ret = ccw(x1, p1, x2, p2, x3, p3);
-	if(ret == 0) cout << 0;
-	else if(ret > 0) cout << 1;
-	else cout << -1;
+
+
+
+    cin >> str;
+    str = ' ' + str;
+    for(int i = 1; i < str.size(); i++){
+        for(int j = 0; j < 26; j++) ary[i][j] = ary[i - 1][j];
+        ary[i][int(str[i] - 'a')]++;
+    }
+    cin >> n;
+    for(int i = 0; i < n; i++){
+        cin >> c >> s >> e;
+        cout << ary[e + 1][int(c - 'a')] - ary[s][int(c - 'a')] << '\n';
+    }
 
 	return 0;
 }
