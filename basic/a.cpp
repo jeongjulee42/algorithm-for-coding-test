@@ -4,7 +4,6 @@ using namespace std;
 vector<pair<int, int>> v;
 int n, ret;
 
-//검사 - 상, 하, 대각선
 bool check(int y, int x){
     for(int i = 0; i < v.size(); i++){
         int vy = v[i].first;
