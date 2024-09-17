@@ -1,31 +1,37 @@
 #include<bits/stdc++.h>
 using namespace std;
-
-int n, b, m, c;
-int ary[100004];
-int bry[100004];
-queue<int> q;
+typedef long long ll;
+ll n, num, sq;
+bool flag = 0;
 
 int main(){
 	ios_base::sync_with_stdio(0); cin.tie(NULL); cout.tie(NULL);
 
     cin >> n;
-    for(int i = 0; i < n; i++){
-        cin >> ary[i];
-    }
-    for(int i = 0; i < n; i++){
-        cin >> bry[i];
-    }
-    for(int i = n-1; i >= 0; i--){
-        if(ary[i] == 0) q.push(bry[i]);
-    }
-    cin >> m;
-    for(int i = 0; i < m; i++){
-        cin >> c;
-        q.push(c);
-
-        cout << q.front() << ' ';
-        q.pop();
+    for(int z = 0; z < n; z++){    
+        cin >> num;
+        if(num == 0 || num == 1 || num == 2){
+            cout << 2 << '\n';
+            continue;
+        }
+        if(num % 2 == 0) num++;
+        while(1){
+            sq = sqrt(num);
+            int cnt = 0;
+            for(int i = 2; i <= sq; i ++){
+                if(num % i == 0) {
+                    cnt++;
+                    break;
+                }
+            }
+            if(cnt){
+                num += 2;
+            }
+            else{
+                cout << num << '\n';
+                break;
+            }
+        }
     }
 
 	return 0;
