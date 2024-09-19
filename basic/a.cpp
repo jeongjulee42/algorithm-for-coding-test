@@ -2,42 +2,30 @@
 using namespace std;
 typedef long long ll;
 
-int n, num, minNum = 987654321, maxNum = -987654321, sum, mid, cnt;
-vector<int> v;
-map<int, int> mp;
+int n, cnt;
+string str;
 
+int recursion(string s, int l, int r){
+    cnt++;
+    if(l >= r) return 1;
+    else if(s[l] != s[r]) return 0;
+    else return recursion(s, l+1, r-1);
+}
+
+int isPalindrome(string s){
+    return recursion(s, 0, s.size()-1);
+}
 
 int main(){
 	ios_base::sync_with_stdio(0); cin.tie(NULL); cout.tie(NULL);
 
     cin >> n;
     for(int i = 0; i < n; i++){
-        cin >> num;
-        mp[num]++;
-        minNum = min(minNum, num);
-        maxNum = max(maxNum, num);
-        sum += num;
+        cin >> str;
+        cnt = 0;
+        int ret = isPalindrome(str);
+        cout << ret << ' ' << cnt << '\n';
     }
-    cout << round(sum / n + 0.0) << '\n';
-    
-    bool flag = 0;
-    for(auto m : mp){
-        mid = max(mid, m.second);
-        cnt += m.second;
-        if(cnt >= n / 2 && !flag){
-            flag = 1;
-            cout << m.first << '\n';
-        }
-    }
-
-
-    for(auto m : mp){
-        if(m.second == mid) v.push_back(m.first);
-    }
-    if(v.size() >= 2) cout << v[1] << '\n';
-    else cout << v[0] << '\n';
-
-    cout << maxNum - minNum << '\n';
 
 	return 0;
 }
