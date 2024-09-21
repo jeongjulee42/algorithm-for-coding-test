@@ -11,7 +11,7 @@ int main(){
     ary[1] = 1;
     ary[2] = 2;
     for(int i = 3; i <= 1000000; i++){
-        ary[i] = ary[i-1] + ary[i-2];
+        ary[i] = (ary[i-1] + ary[i-2]) % 15746;
     }
     cout << ary[n] % 15746 << '\n';
 
