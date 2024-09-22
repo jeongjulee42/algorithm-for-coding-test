@@ -2,18 +2,22 @@
 using namespace std;
 typedef long long ll;
 
-int ary[1000001], n;
+ll ary[101];
+int t, n;
 
 int main(){
 	ios_base::sync_with_stdio(0); cin.tie(NULL); cout.tie(NULL);
 
-    cin >> n;
+    cin >> t;
     ary[1] = 1;
-    ary[2] = 2;
-    for(int i = 3; i <= 1000000; i++){
-        ary[i] = (ary[i-1] + ary[i-2]) % 15746;
+    ary[2] = 1;
+    for(int i = 3; i <= 100; i++){
+        ary[i] = ary[i - 3] + ary[i - 2];
     }
-    cout << ary[n] % 15746 << '\n';
+    for(int z = 0; z < t; z++){
+        cin >> n;
+        cout << ary[n] << '\n';
+    }
 
 	return 0;
 }
