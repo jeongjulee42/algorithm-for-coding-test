@@ -2,25 +2,20 @@
 using namespace std;
 typedef long long ll;
 
-ll ary[101][11], n, ret;
+int n, p[10004];
+int ary[10004][3];
 
 int main(){
 	ios_base::sync_with_stdio(0); cin.tie(NULL); cout.tie(NULL);
 
     cin >> n;
-    for(int i = 1; i < 10; i++) ary[1][i] = 1;
-    for(int i = 2; i <= n; i++){
-        ary[i][0] = ary[i-1][1];
-        for(int j = 1; j < 10; j++){
-            ary[i][j] = (ary[i-1][j-1] + ary[i-1][j+1]) % 1000000000;
-        }
+    for(int i = 1; i <= n; i++) cin >> p[i];
+    for(int i = 1; i <= n; i++){
+        ary[i][0] = max({ary[i-1][0], ary[i-1][1], ary[i-1][2]});
+        ary[i][1] = ary[i-1][0] + p[i];
+        ary[i][2] = max(ary[i-1][0], ary[i-1][1]) + p[i];
     }
-
-    for(int i = 0; i < 10; i++){
-        ret = (ret + ary[n][i]) % 1000000000;
-    }
-
-    cout << ret << '\n';
+    cout << max({ary[n][0], ary[n][1], ary[n][2]}) << '\n';
 
 	return 0;
 }
