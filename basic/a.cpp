@@ -2,24 +2,21 @@
 using namespace std;
 typedef long long ll;
 
-string a, b;
-int lcs[1004][1004];
+ll n, m, ary[1000001], sum[1000001], bry[1001], ret;
 
 int main(){
 	ios_base::sync_with_stdio(0); cin.tie(NULL); cout.tie(NULL);
 
-    cin >> a;
-    cin >> b;
-    for(int i = 1; i <= a.size(); i++){
-        for(int j = 1; j <= b.size(); j++){
-            if(a[i-1] == b[j-1]){
-                lcs[i][j] = lcs[i-1][j-1] + 1;
-            }else{
-                lcs[i][j] = max(lcs[i-1][j], lcs[i][j-1]);
-            }
-        }
+    cin >> n >> m;
+    for(int i = 1; i <= n; i++){
+        cin >> ary[i];
+        sum[i] = ((sum[i-1] + ary[i]) % m);
+        bry[sum[i]]++;
     }
-    cout << lcs[a.size()][b.size()] << '\n';
+    for(int i = 1; i < m; i++){
+        ret += ((bry[i] + 1) * bry[i] / 2 - bry[i]);
+    }
+    cout << (ret + (bry[0] + 1) * bry[0] / 2) << '\n';
 
 	return 0;
 }
