@@ -2,22 +2,36 @@
 using namespace std;
 typedef long long ll;
 
-ll n, m, ary[1000001], sum[1000001], bry[1001], ret;
+string str;
+vector<int> v1;
+vector<int> v2;
+int ret;
 
 int main(){
 	ios_base::sync_with_stdio(0); cin.tie(NULL); cout.tie(NULL);
 
-    cin >> n >> m;
-    for(int i = 1; i <= n; i++){
-        cin >> ary[i];
-        sum[i] = ((sum[i-1] + ary[i]) % m);
-        bry[sum[i]]++;
+    cin >> str;
+    string temp = "";
+    bool flag = 0;
+    for(int i = 0; i < str.size(); i++){
+        if(str[i] == '+' || str[i] == '-'){
+            int num = stoi(temp);
+            temp = "";
+            if(flag) v2.push_back(num);
+            else v1.push_back(num);
+        }else{
+            temp += str[i];
+        }
+        if(str[i] == '-') flag = 1;
     }
-    for(int i = 1; i < m; i++){
-        ret += ((bry[i] + 1) * bry[i] / 2 - bry[i]);
-    }
-    cout << (ret + (bry[0] + 1) * bry[0] / 2) << '\n';
+    if(flag) v2.push_back(stoi(temp));
+    else v1.push_back(stoi(temp));
 
+    for(int i = 0; i < v1.size(); i++ )ret += v1[i];
+    for(int i = 0; i < v2.size(); i++) ret -= v2[i];
+    cout << ret << '\n';
 	return 0;
 }
 
+//1 str로 전체 문장 입력받음
+//2 - 나오면 뒤에 있는 숫자들 다 더하기
