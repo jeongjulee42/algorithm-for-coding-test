@@ -2,36 +2,47 @@
 using namespace std;
 typedef long long ll;
 
-string str;
-vector<int> v1;
-vector<int> v2;
-int ret;
+int n, ret[3], temp;
+int ary[3000][3000];
+
+void go(int y, int x, int num){
+    int t = 0;
+    bool flag = 0;
+    for(int i = y; i < y + num; i++){
+        for(int j = x; j < x + num; j++){
+            t += ary[i][j];
+            if(ary[i][j] != ary[y][x]){
+                flag = 1;
+                break;
+            }
+        }
+    }
+    if(flag){
+        for(int i = y; i < y + num; i += num / 3){
+            for(int j = x; j < x + num; j += num / 3){
+                go(i, j, num / 3);
+            }
+        }
+    } else if(t == 0){
+        ret[1]++;
+    } else if(t == num * num){
+        ret[2]++;
+    } else if(t == -1 * num * num){
+        ret[0]++;
+    }
+}
 
 int main(){
 	ios_base::sync_with_stdio(0); cin.tie(NULL); cout.tie(NULL);
 
-    cin >> str;
-    string temp = "";
-    bool flag = 0;
-    for(int i = 0; i < str.size(); i++){
-        if(str[i] == '+' || str[i] == '-'){
-            int num = stoi(temp);
-            temp = "";
-            if(flag) v2.push_back(num);
-            else v1.push_back(num);
-        }else{
-            temp += str[i];
+    cin >> n;
+    for(int i = 0; i < n; i++){
+        for(int j = 0; j < n; j++){
+            cin >> ary[i][j];
         }
-        if(str[i] == '-') flag = 1;
     }
-    if(flag) v2.push_back(stoi(temp));
-    else v1.push_back(stoi(temp));
+    go(0, 0, n);
+    for(int i = 0; i < 3; i++) cout << ret[i] << '\n';
 
-    for(int i = 0; i < v1.size(); i++ )ret += v1[i];
-    for(int i = 0; i < v2.size(); i++) ret -= v2[i];
-    cout << ret << '\n';
 	return 0;
 }
-
-//1 str로 전체 문장 입력받음
-//2 - 나오면 뒤에 있는 숫자들 다 더하기
