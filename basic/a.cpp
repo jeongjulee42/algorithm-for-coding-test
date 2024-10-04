@@ -2,43 +2,65 @@
 using namespace std;
 typedef long long ll;
 
-int ary[10][10], visited[10][10], n, m, x, y, u, v;
+int n, a, b, c;
+int visited[100004];
+vector<pair<int, int>> v[100004]; // {도착노드, 해당노드까지의거리} 
 
 int main(){
    ios_base::sync_with_stdio(0); cin.tie(NULL); cout.tie(NULL);
 
-   cin >> n >> m;
-   for(int i = 0; i < n; i++){
-      cin >> x >> y;
-      ary[(x-1)/10][(x-1)%10] = y-1;
+   cin >> n;
+   for(int i = 1; i <= n; i++){
+      cin >> a;
+      while(1){
+         cin >> b;
+         if(b == -1) break;
+         cin >> c;
+         v[a].push_back({b, c});
+      }
    }
-   for(int i = 0; i < m; i++){
-      cin >> u >> v;
-      ary[(u-1)/10][(u-1)%10] = v-1;
-   }
+   // bfs 1회
    queue<int> q;
-   q.push(0);
+   q.push(1);
    while(q.size()){
       int num = q.front();
       q.pop();
-      for(int i = 1; i <= 6; i++){
-         int dn = num + i;
-         if(dn >= 100) continue;
-         if(visited[dn/10][dn%10]) continue;
-         if(ary[dn/10][dn%10]){
-            int temp = ary[dn/10][dn%10];
-            if(visited[temp/10][temp%10]) continue;
-            visited[dn/10][dn%10] = visited[num/10][num%10] + 1;
-            visited[temp/10][temp%10] = visited[dn/10][dn%10];
-            q.push(temp);
-         }else{
-            visited[dn/10][dn%10] = visited[num/10][num%10] + 1;
-            q.push(dn);
+      for(auto temp : v[num]){
+         if(visited[temp.first] || temp.first == 1){
+            continue;
          }
+         visited[temp.first] = visited[num] + temp.second;
+         q.push(temp.first);
       }
    }
-
-   cout << visited[9][9] << '\n';
+   int start = 0;
+   int maxVal = 0;
+   for(int i = 1; i <= n; i++){
+      if(visited[i] > maxVal){
+         maxVal = visited[i];
+         start = i;
+      }
+      visited[i] = 0;
+   }
+   
+   queue<int> q1;
+   q1.push(start);
+   while(q1.size()){
+      int num = q1.front();
+      q1.pop();
+      for(auto temp : v[num]){
+         if(visited[temp.first] || temp.first == start){
+            continue;
+         }
+         visited[temp.first] = visited[num] + temp.second;
+         q1.push(temp.first);
+      }
+   }
+   int ret = 0;
+   for(int i = 1; i <= n; i++){
+      ret = max(ret, visited[i]);
+   }
+   cout << ret << '\n';
 
    return 0;
 }
