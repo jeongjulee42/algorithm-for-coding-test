@@ -2,19 +2,16 @@
 using namespace std;
 typedef long long ll;
 
-int n;
+int n, ret;
 
 int main(){
    ios_base::sync_with_stdio(0); cin.tie(NULL); cout.tie(NULL);
 
-   cin >> n;
-   for(int i = -1 * (n - 1); i < n; i++){
-      int num = abs(i);
-      for(int j = 1; j < n - num; j++) cout << ' ';
-      for(int j = 0; j < num; j++) cout << '*';
-      cout << '*';
-      for(int j = 0; j < num; j++) cout << '*';
-      cout << '\n';
+   for(int i = 0; i < 5; i++){
+      cin >> n;
+      ret = (ret + (n * n)) % 10;
    }
+   cout << ret << '\n';
+
    return 0;
 }
