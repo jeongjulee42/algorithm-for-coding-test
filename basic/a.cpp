@@ -2,26 +2,23 @@
 using namespace std;
 typedef long long ll;
 
-int n, a, b, c, ret, temp;
+int n, num;
 
 int main(){
    ios_base::sync_with_stdio(0); cin.tie(NULL); cout.tie(NULL);
 
-   cin >> n;
-   for(int i = 0; i < n; i++){
-      cin >> a >> b >> c;
-      if(a == b && b == c){
-         temp = 10000 + (a * 1000);
-      }else if(a == b || b == c){
-         temp = 1000 + (b * 100);
-      }else if(a == c){
-         temp = 1000 + (a * 100);
-      }else{
-         temp = max({a, b, c}) * 100;
+   for(int i = 0; i < 3; i++){
+      num = 0;
+      for(int j = 0; j < 4; j++) {
+         cin >> n;
+         if(n == 0) num++;
       }
-      ret = max(temp, ret);
+      if(num == 0) cout << 'E' << '\n';
+      else if(num == 1) cout << 'A' << '\n';
+      else if(num == 2) cout << 'B' << '\n';
+      else if(num == 3) cout << 'C' << '\n';
+      else cout << 'D' << '\n';
    }
-   cout << ret << '\n';
 
    return 0;
 }
