@@ -10,7 +10,6 @@ int main(){
    cin >> n;
    for(int i = -1 * (n - 1); i < n; i++){
       int num = abs(i);
-      for(int j = 0; j < num; j++) cout << ' ';
       for(int j = 0; j < n - num; j++) cout << '*';
       cout << '\n';
    }
