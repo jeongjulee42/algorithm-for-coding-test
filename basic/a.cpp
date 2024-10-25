@@ -2,17 +2,18 @@
 using namespace std;
 typedef long long ll;
 
-int n;
+int ary[104], adj[104], ret, n;
 
 int main(){
    ios_base::sync_with_stdio(0); cin.tie(NULL); cout.tie(NULL);
 
    cin >> n;
-   for(int i = -1 * (n - 1); i < n; i++){
-      int num = abs(i);
-      for(int j = 0; j < n - num; j++) cout << '*';
-      cout << '\n';
+   for(int i = 1; i <= n; i++) cin >> ary[i];
+   for(int i = 1; i <= n; i++){
+      if(ary[i]) adj[i] = adj[i-1] + 1;
+      ret += adj[i];
    }
+   cout << ret << '\n';
 
    return 0;
 }
