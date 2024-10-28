@@ -2,26 +2,16 @@
 using namespace std;
 typedef long long ll;
 
-int n;
-
-int go(int num){
-   int a = num % 10;
-   int b = ((num / 10) + a) % 10;
-   return a * 10 + b;
-}
+int ary[10], t;
 
 int main(){
    ios_base::sync_with_stdio(0); cin.tie(NULL); cout.tie(NULL);
-   cin >> n;
-   int ret = 1;
-   int temp = go(n);
-   while(1){
-      if(temp == n){
-         cout << ret << '\n';
-         break;
-      }
-      ret++;
-      temp = go(temp);
+
+   cin >> t;
+   for(int i = 0; i < t; i++){
+      for(int j = 0; j < 10; j++) cin >> ary[j];
+      sort(ary, ary + 10);
+      cout << ary[7] << '\n';
    }
 
    return 0;
