@@ -2,7 +2,7 @@
 using namespace std;
 typedef long long ll;
 
-ll n, ary[46];
+ll n, ary[91];
 
 int main(){
    ios_base::sync_with_stdio(0); cin.tie(NULL); cout.tie(NULL);
