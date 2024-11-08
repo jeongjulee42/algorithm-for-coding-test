@@ -2,23 +2,26 @@
 using namespace std;
 typedef long long ll;
 
-int num, ret, n;
+string str, ret;
+
+bool check(char c){
+   if(c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u') return true;
+   return false;
+}
 
 int main(){
    ios_base::sync_with_stdio(0); cin.tie(NULL); cout.tie(NULL);
    
-   for(int i = 1; i <= 5; i++){
-      int temp = 0;
-      for(int j = 0; j < 4; j++){
-         cin >> n;
-         temp += n;
+   getline(cin, str);
+   for(int i = 0; i < str.size(); i++){
+      if(check(str[i]) && i + 2 < str.size()){
+         if(str[i + 1] == 'p' && str[i + 2] == str[i]){
+            i += 2;
+         }
       }
-      if(ret < temp){
-         ret = temp;
-         num = i;
-      }
+      ret += str[i];
    }
-   cout << num << ' ' << ret << '\n';
+   cout << ret << '\n';
 
    return 0;
 }
