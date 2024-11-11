@@ -2,26 +2,20 @@
 using namespace std;
 typedef long long ll;
 
-char adrian[3] = {'A', 'B', 'C'};
-char bruno[4] = {'B', 'A', 'B', 'C'};
-char goran[6] = {'C', 'C', 'A', 'A', 'B', 'B'};
-int n, a, b, g;
 string str;
+int ary[3];
 
 int main(){
    ios_base::sync_with_stdio(0); cin.tie(NULL); cout.tie(NULL);
    
-   cin >> n;
+   for(int i = 0; i < 3; i++) cin >> ary[i];
    cin >> str;
-   for(int i = 0; i < str.size(); i++){
-      if(str[i] == adrian[i % 3]) a++;
-      if(str[i] == bruno[i % 4]) b++;
-      if(str[i] == goran[i % 6]) g++;
+   sort(ary, ary + 3);
+   for(int i = 0; i < 3; i++){
+      int num = str[i] - 'A';
+      cout << ary[num] << ' ';
    }
-   cout << max({a, b, g}) << '\n';
-   if(max({a, b, g}) == a) cout << "Adrian" << '\n';
-   if(max({a, b, g}) == b) cout << "Bruno" << '\n';
-   if(max({a, b, g}) == g) cout << "Goran" << '\n';
+   
 
    return 0;
 }
