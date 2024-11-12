@@ -2,20 +2,17 @@
 using namespace std;
 typedef long long ll;
 
-string str;
-int ary[3];
+int n, w, h, temp;
 
 int main(){
    ios_base::sync_with_stdio(0); cin.tie(NULL); cout.tie(NULL);
    
-   for(int i = 0; i < 3; i++) cin >> ary[i];
-   cin >> str;
-   sort(ary, ary + 3);
-   for(int i = 0; i < 3; i++){
-      int num = str[i] - 'A';
-      cout << ary[num] << ' ';
+   cin >> n >> w >> h;
+   for(int i = 0; i < n; i++){
+      cin >> temp;
+      if(temp * temp <= w * w + h * h) cout << "DA" << '\n';
+      else cout << "NE" << '\n';
    }
-   
 
    return 0;
 }
