@@ -2,18 +2,17 @@
 using namespace std;
 typedef long long ll;
 
-int ret, a, b, now;
+string a, b;
+ll ret;
 
 int main(){
    ios_base::sync_with_stdio(0); cin.tie(NULL); cout.tie(NULL);
    
-   for(int i = 0; i < 10; i++){
-      cin >> a;
-      now -= a;
-      ret = max(ret, now);
-      cin >> b;
-      now += b;
-      ret = max(ret, now);
+   cin >> a >> b;
+   for(int i = 0; i < a.size(); i++){
+      for(int j = 0; j < b.size(); j++){
+         ret += (a[i] - '0') * (b[j] - '0');
+      }
    }
    cout << ret << '\n';
 
