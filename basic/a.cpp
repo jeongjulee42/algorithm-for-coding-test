@@ -2,20 +2,27 @@
 using namespace std;
 typedef long long ll;
 
-int t;
-string a, b;
+char ary[51][51];
+int r, c, zr, zc;
 
 int main(){
    ios_base::sync_with_stdio(0); cin.tie(NULL); cout.tie(NULL);
    
-   cin >> t;
-   for(int z = 0; z < t; z++){
-      cin >> a >> b;
-      int ret = 0;
-      for(int i = 0; i < a.size(); i++){
-         if(a[i] != b[i]) ret++;
+   cin >> r >> c >> zr >>zc;
+   for(int i = 0; i < r; i++){
+      for(int j = 0; j < c; j++){
+         cin >> ary[i][j];
       }
-      cout << "Hamming distance is " << ret << '.' << '\n';
+   }
+   for(int i = 0; i < r; i++){
+      for(int j = 0; j < zr; j++){
+         for(int k = 0; k < c; k++){
+            for(int l = 0; l < zc; l++){
+               cout << ary[i][k];
+            }
+         }
+         cout << '\n';
+      }
    }
 
    return 0;
