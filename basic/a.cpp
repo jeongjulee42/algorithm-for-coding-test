@@ -2,27 +2,21 @@
 using namespace std;
 typedef long long ll;
 
-char ary[51][51];
-int r, c, zr, zc;
+string num;
 
 int main(){
    ios_base::sync_with_stdio(0); cin.tie(NULL); cout.tie(NULL);
    
-   cin >> r >> c >> zr >>zc;
-   for(int i = 0; i < r; i++){
-      for(int j = 0; j < c; j++){
-         cin >> ary[i][j];
+   while(1){
+      cin >> num;
+      if(num == "0") break;
+      int ret = 0;
+      for(int i = 0; i < num.size(); i++){
+         if(num[i] == '1') ret += 2;
+         else if(num[i] == '0') ret += 4;
+         else ret += 3;
       }
-   }
-   for(int i = 0; i < r; i++){
-      for(int j = 0; j < zr; j++){
-         for(int k = 0; k < c; k++){
-            for(int l = 0; l < zc; l++){
-               cout << ary[i][k];
-            }
-         }
-         cout << '\n';
-      }
+      cout << ret + num.size() + 1 << '\n';
    }
 
    return 0;
